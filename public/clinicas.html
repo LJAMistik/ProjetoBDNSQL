@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clínicas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <section class="container-formulario">      
+      <h1>Clínicas</h1>
+      <form>
+        <fieldset>
+          <legend>Cadastro de Clínicas:</legend>
+          <label for="nome">Nome:</label><br>
+          <input type="text" id="nome" name="nome" value="Clinica de Teste" required><br><br>
+          
+          <label for="email">Email:</label><br>
+          <input type="email" id="email" name="email" value="contato@clinicadeteste.com" required><br><br>
+          
+          <label for="data_cadastro">Data de Cadastro:</label><br>
+          <input type="text" id="data_cadastro" name="data_cadastro" value="09/04/2024" pattern="\d{2}/\d{2}/\d{4}" title="Por favor, insira uma data de cadastro válida (formato: dd/mm/aaaa)" required><br><br>
+
+          <label for="telefone">Telefone:</label><br>
+          <input type="tel" id="telefone" name="telefone" value="(15) 99999-9999" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" title="Por favor, insira um número de contato válido (formato: (XX) XXXXX-XXXX)" required><br><br>
+          
+          <label for="classificacao">Classificação:</label><br>
+          <input type="number" id="classificacao" name="classificacao" value="4.8" min="0" max="5" step="0.1" required><br><br>
+
+          <label for="especialidades">Especialidades:</label><br>
+          <input type="text" id="especialidades" name="especialidades" value="1, 2, 3" placeholder="Insira os números das especialidades separados por vírgula" required><br>
+          <small>Insira os números das especialidades separados por vírgula (ex: 1, 2, 3)</small><br><br>
+
+          <fieldset>
+            <legend>Endereço:</legend>
+            <label for="logradouro">Logradouro:</label><br>
+            <input type="text" id="logradouro" name="logradouro" value="Rua de Teste"><br><br>
+            
+            <label for="numero">Número:</label><br>
+            <input type="text" id="numero" name="numero" value="1234"><br><br>
+
+            <label for="complemento">Complemento:</label><br>
+            <textarea class="form-control" id="complemento9" name="complemento" ></textarea><br><br>
+            
+            <label for="bairro">Bairro:</label><br>
+            <input type="text" id="bairro" name="bairro" value="Centro"><br><br>
+            
+            <label for="cidade">Cidade:</label><br>
+            <input type="text" id="cidade" name="cidade" value="Votorantim"><br><br>
+            
+            <label for="estado">Estado:</label><br>
+            <input type="text" id="estado" name="estado" value="São Paulo"><br><br>
+            
+            <label for="unidade-da-federacao">Unidade da Federação</label>
+            <select required class="form-select custom-select" id="unidade-da-federacao">
+              <option value="" selected>Selecione...</option>
+              <option value="AC">Acre (AC)</option>
+              <option value="AL">Alagoas (AL)</option>
+              <option value="AP">Amapá (AP)</option>
+              <option value="AM">Amazonas (AM)</option>
+              <option value="BA">Bahia (BA)</option>
+              <option value="CE">Ceará (CE)</option>
+              <option value="DF">Distrito Federal (DF)</option>
+              <option value="ES">Espírito Santo (ES)</option>
+              <option value="GO">Goiás (GO)</option>
+              <option value="MA">Maranhão (MA)</option>
+              <option value="MT">Mato Grosso (MT)</option>
+              <option value="MS">Mato Grosso do Sul (MS)</option>
+              <option value="MG">Minas Gerais (MG)</option>
+              <option value="PA">Pará (PA)</option>
+              <option value="PB">Paraíba (PB)</option>
+              <option value="PR">Paraná (PR)</option>
+              <option value="PE">Pernambuco (PE)</option>
+              <option value="PI">Piauí (PI)</option>
+              <option value="RJ">Rio de Janeiro (RJ)</option>
+              <option value="RN">Rio Grande do Norte (RN)</option>
+              <option value="RS">Rio Grande do Sul (RS)</option>
+              <option value="RO">Rondônia (RO)</option>
+              <option value="RR">Roraima (RR)</option>
+              <option value="SC">Santa Catarina (SC)</option>
+              <option value="SP">São Paulo (SP)</option>
+              <option value="SE">Sergipe (SE)</option>
+              <option value="TO">Tocantins (TO)</option>
+            </select><br><br>
+            
+            <label for="cep">CEP:</label><br>
+            <input type="text" id="cep" name="cep" value="18111-000" pattern="\d{5}-\d{3}" title="Por favor, insira um CEP válido (formato: XXXXX-XXX)" required><br><br><br><br>
+            
+            <fieldset>
+              <legend>Coordenadas</legend>         
+              <label for="latitude">Latitude:</label><br>
+              <input type="number" id="latitude" name="latitude" min="-90" max="90" step="any" required><br><br>
+
+              <label for="longitude">Longitude:</label><br>
+              <input type="number" id="longitude" name="longitude" min="-180" max="180" step="any" required><br><br>
+            </fieldset>
+          </fieldset>
+        </fieldset> 
+      </form>  
+      <button type="submit" class="botao" id="salvar">Salvar</button>
+    </section>
+
+    <section class="container-tabela">
+      <div>
+        <h4 class="text-primary mt-3">Relação dos Prestadores</h4>
+        <table class="table table-bordered shadow-lg">
+          <thead>
+            <tr class="table-info">
+              <th>Razão Social</th>
+              <th>Fantasia</th>
+              <th>CNAE</th>
+              <th>Dt. Início</th>
+              <th>Geo</th>
+              <th>Opções</th>
+            </tr>
+          </thead>
+          <tbody id="dadosTabela">
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal fade" id="modalMensagem" tabindex="-1" role="dialog">
+        <div class="modal-dialog bg-danger" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger">Mensagem</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+              arial-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <p id="mensagem"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    &copy; Fatec Votorantim - Todos os direitos reservados
+  </footer>
+</body>
+</html>

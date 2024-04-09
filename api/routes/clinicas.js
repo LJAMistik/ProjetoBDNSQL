@@ -1,0 +1,212 @@
+import express from 'express'
+import { connectToDatabase } from '../utils/mongodb.js'
+import { check, validationResult } from 'express-validator'
+
+const router = express.Router()
+const { db, ObjectId } = await connectToDatabase()
+const nomeCollection = 'clinicas'
+
+const validaClinicas = [
+check('cnpj')
+  .not().isEmpty().trim().withMessage('É obrigatório informar o cnpj')
+  .isNumeric().withMessage('O CNPJ deve ter apenas números')
+  .isLength({min:14, max:14}).withMessage('O CNPJ deve ter 14 números')
+  .custom(async (cnpj, { req }) => {
+     const contaClinica = await db.collection(nomeCollection)
+     .countDocuments({
+      'cnpj': cnpj,
+      '_id': { $ne: new ObjectId(req.body._id) } // Excluir o documento atual da comparação
+    })
+     if(contaClinica > 0){
+      throw new Error('O CNPJ informado já está cadastrado!')
+     }
+  }),
+check('nome')
+  .not().isEmpty().trim().withMessage('O nome é obrigatório')
+  .isLength({min:3}).withMessage('O nome é muito curto. Mínimo de 3')  
+  .isLength({max:200}).withMessage('O nome é muito longo. Máximo de 200'),
+
+  check('email')
+  .not().isEmpty().trim().withMessage('O email é obrigatório')
+  .isEmail().withMessage('Formato de email inválido'),
+
+check('data_cadastro')
+  .not().isEmpty().withMessage('A data de cadastro é obrigatória')
+  .isISO8601().toDate().withMessage('Formato de data inválido'),
+
+check('telefone')
+  .not().isEmpty().trim().withMessage('O telefone é obrigatório')
+  .isMobilePhone('pt-BR').withMessage('Formato de telefone inválido'),
+
+check('classificacao')
+  .not().isEmpty().withMessage('A classificação é obrigatória')
+  .isFloat({ min: 0, max: 10 }).withMessage('A classificação deve estar entre 0 e 10'),
+
+check('especialidades')
+  .not().isEmpty().withMessage('As especialidades são obrigatórias')
+  .isArray({ min: 1 }).withMessage('Pelo menos uma especialidade deve ser selecionada')
+  .custom((value, { req }) => {
+    const validEspecialidades = ['1', '2', '3']; // Especialidades válidas
+    const invalidEspecialidades = value.filter(item => !validEspecialidades.includes(item));
+    if (invalidEspecialidades.length > 0) {
+      throw new Error('Especialidades inválidas');
+    }
+    return true;
+  }).withMessage('Especialidades inválidas'),
+
+check('cep')
+  .isLength({min:8, max:8}).withMessage('O CEP informado é inválido') 
+  .isNumeric().withMessage('O CEP deve ter apenas números') 
+  .not().isEmpty().trim().withMessage('É obrigatório informar o CEP'),
+check('endereco.logradouro').notEmpty().withMessage('O Logradouro é obrigatório'),
+check('endereco.bairro').notEmpty().withMessage('O bairro é obrigatório'),
+check('endereco.localidade').notEmpty().withMessage('A localidade é obrigatório'),
+check('endereco.uf').isLength({min: 2, max:2}).withMessage('UF é inválida'),
+check('localizacao.type').equals('Point').withMessage('Tipo inválido'),
+check('localizacao.coordinates').isArray().withMessage('Coord. inválidas'),
+check('localizacao.coordinates.*').isFloat().withMessage('Os valores das coordenadas devem ser números'),   
+
+]
+
+/**
+ * GET /api/prestadores
+ * Lista todas clinicas
+ * Parâmetros: limit, skip e order
+ */
+router.get('/', async (req, res) => {
+  const { limit, skip, order } = req.query //Obter da URL
+  try {
+    const docs = []
+    await db.collection(nomeCollection)
+      .find()
+      .limit(parseInt(limit) || 10)
+      .skip(parseInt(skip) || 0)
+      .sort({ order: 1 })
+      .forEach((doc) => {
+        docs.push(doc)
+      })
+    res.status(200).json(docs)
+  } catch (err) {
+    res.status(500).json(
+      {
+        message: 'Erro ao obter a listagem das clínicas',
+        error: `${err.message}`
+      })
+  }
+})
+
+/**
+ * GET /api/clinicas/id/:id
+ * Lista as clinicas pelo id
+ * Parâmetros: id
+ */
+router.get('/id/:id', async (req, res) => {
+  try {
+    const docs = []
+    await db.collection(nomeCollection)
+      .find({ '_id': { $eq: new ObjectId(req.params.id) } }, {})
+      .forEach((doc) => {
+        docs.push(doc)
+      })
+    res.status(200).json(docs)
+  } catch (err) {
+    res.status(500).json({
+      errors: [{
+        value: `${err.message}`,
+        msg: 'Erro ao obter a clinica pelo ID',
+        param: '/id/:id'
+      }]
+    })
+  }
+})
+/**
+ * GET /api/clinicas/razao/:filtor
+ * Lista as clínicas pelpelo nome
+ * Parâmetros: filtro
+ */
+router.get('/nome/:filtro', async (req, res) => {
+  try {
+    const filtro = req.params.filtro.toString()
+    const docs = []
+    await db.collection(nomeCollection)
+      .find({
+        $or: [
+            { 'nome': { $regex: filtro, $options: 'i' } }
+        ]
+      })
+      .forEach((doc) => {
+        docs.push(doc)
+      })
+    res.status(200).json(docs)
+  } catch (err) {
+    res.status(500).json({
+      errors: [{
+        value: `${err.message}`,
+        msg: 'Erro ao obter a clínica pelo nome',
+        param: '/razao/:filtro'
+      }]
+    })
+  }
+})
+/**
+ * DELETE /api/clinicas/:id
+ * Remove a clínica pelo id
+ * Parâmetros: id
+ */
+router.delete('/:id', async(req, res) => {
+  const result = await db.collection(nomeCollection).deleteOne({
+    "_id": { $eq: new ObjectId(req.params.id)}
+  })
+  if (result.deletedCount === 0){
+    res.status(404).json({
+      errors: [{
+        value: `Não há nenhuma clínica com o id ${req.params.id}`,
+        msg: 'Erro ao excluir a clínica',
+        param: '/:id'
+      }]
+    })
+  } else {
+    res.status(200).send(result)
+  }
+})
+
+//  * POST /api/clinicas
+//  * Insere um nova clinica
+//  * Parâmetros: Objeto clínicas
+
+router.post('/', validaClinicas, async(req, res) => {
+  try{
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+      return res.status(400).json({ errors: errors.array()})
+    }
+    const prestador = 
+                 await db.collection(nomeCollection).insertOne(req.body)
+    res.status(201).json(clinicas) //201 é o status created            
+  } catch (err){
+    res.status(500).json({message: `${err.message} Erro no Server`})
+  }
+})
+/**
+ * PUT /api/clinicas
+ * Altera uma clinica pelo _id
+ * Parâmetros: Objeto clinicas
+ */
+router.put('/', validaClinicas, async(req, res) => {
+  let idDocumento = req.body._id //armazenamos o _id do documento
+  delete req.body._id //removemos o _id do body que foi recebido na req.
+  try {
+      const errors = validationResult(req)
+      if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+      }
+      const prestador = await db.collection(nomeCollection)
+      .updateOne({'_id': {$eq: new ObjectId(idDocumento)}},
+                 {$set: req.body})
+      res.status(202).json(clinicas) //Accepted           
+  } catch (err){
+    res.status(500).json({errors: err.message})
+  }
+})
+
+export default router

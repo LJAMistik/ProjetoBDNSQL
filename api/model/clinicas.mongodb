@@ -1,0 +1,25 @@
+use('ProjetoMongodb')
+
+clinicas ={
+    "nome": "Clinica de Teste",
+    "email": "contato@clinicadeteste.com",
+    "data_cadastro": "09/04/2024",
+    "telefone": "(15) 99999-9999",
+    "classificacao": "9.8",
+    "especialidades": ["1,2,3"],
+    "endereco": {
+      "logradouro": "Rua de Teste",
+      "numero": "1234",
+      "complemento": "nenhum",
+      "bairro": "Centro",
+      "cidade": "Votorantim",
+      "estado": "São Paulo",
+      "uf": "SP",
+      "cep": "18111-000",
+      "localizacao": {
+        "type": "Point",
+        "coordinates": [-12.3456, -12.3456]
+      }
+    }
+}
+  

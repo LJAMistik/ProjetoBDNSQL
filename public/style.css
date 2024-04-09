@@ -1,0 +1,87 @@
+body {
+    background-color: #0e101c;
+    color: #a03bff;
+    font-family: Arial, sans-serif;
+}
+
+.container-principal {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    border: solid #a03bff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-color: #1a1e33;
+}
+
+.caixa-titulo {
+    text-align: center;
+}
+
+.caixa-imagem {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+img {
+    border: solid #a03bff;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.caixa-autenticacao {
+    text-align: center;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.form-control {
+    width: calc(80% - 22px);
+    padding: 12px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    border: 1px solid #a03bff;
+    background-color: #1a1e33;
+    color: #a03bff;
+    box-sizing: border-box;
+}
+
+.botao {
+    display: inline-block;
+    padding: 15px 40px;
+    border: solid 2px 40px;
+    border-radius: 5px;
+    color: #a03bff;
+    font-size: 24px;
+    text-decoration: none;
+    transition: all 0.5s ease;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+.botao:hover {
+    border-radius: 15px;
+    text-shadow: 0 0 12px #a03bff;
+    box-shadow: 0 0 12px 1px #a03bff;
+}
+
+h1 {
+    text-align: center;
+}
+
+legend {
+    text-align: center;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
