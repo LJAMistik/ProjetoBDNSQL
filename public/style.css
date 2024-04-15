@@ -123,3 +123,104 @@ footer {
     align-items: center;
     justify-content: center;   
 }
+
+/*Animação*/
+
+.card {
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+.card span.border-top,
+.card span.border-bottom {
+    position: absolute;
+    background: linear-gradient(to right, transparent, #282e44); /* Eixo X branco */
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.card span.border-left,
+.card span.border-right {
+    position: absolute;
+    background: linear-gradient(to bottom, transparent, #1a1e33); /* Eixo Y roxo */
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+
+.card span.border-top,
+.card span.border-bottom {
+    width: 100%;
+    height: 3px;
+}
+
+.card span.border-left,
+.card span.border-right {
+    width: 3px;
+    height: 100%;
+}
+
+.card span.border-top {
+    top: 0;
+    left: 0;
+    animation-name: animar1;
+}
+
+.card span.border-right {
+    top: 0;
+    right: 0;
+    animation-name: animar2;
+    animation-delay: 1s;
+}
+
+.card span.border-bottom {
+    bottom: 0;
+    right: 0;
+    animation-name: animar3;
+}
+
+.card span.border-left {
+    bottom: 0;
+    left: 0;
+    animation-name: animar4;
+    animation-delay: 1s;
+}
+
+@keyframes animar1 {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes animar2 {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes animar3 {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes animar4 {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
