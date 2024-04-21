@@ -3,6 +3,9 @@ import { connectToDatabase } from '../utils/mongodb.js'
 import { check, validationResult } from 'express-validator'
 
 const router = express.Router()
+
+// Conectar ao banco de dados
+
 const { db, ObjectId } = await connectToDatabase()
 const nomeCollection = 'clinicas'
 
@@ -69,7 +72,7 @@ check('localizacao.coordinates.*').isFloat().withMessage('Os valores das coorden
 ]
 
 /**
- * GET /api/prestadores
+ * GET /api/clinicas
  * Lista todas clinicas
  * Parâmetros: limit, skip e order
  */
@@ -120,8 +123,8 @@ router.get('/id/:id', async (req, res) => {
   }
 })
 /**
- * GET /api/clinicas/razao/:filtor
- * Lista as clínicas pelpelo nome
+ * GET /api/clinicas/razao/:filtro
+ * Lista as clínicas pelo nome
  * Parâmetros: filtro
  */
 router.get('/nome/:filtro', async (req, res) => {
@@ -180,13 +183,13 @@ router.post('/', validaClinicas, async(req, res) => {
     if(!errors.isEmpty()){
       return res.status(400).json({ errors: errors.array()})
     }
-    const prestador = 
-                 await db.collection(nomeCollection).insertOne(req.body)
+    const clinicas = await db.collection(nomeCollection).insertOne(req.body)
     res.status(201).json(clinicas) //201 é o status created            
   } catch (err){
     res.status(500).json({message: `${err.message} Erro no Server`})
   }
 })
+
 /**
  * PUT /api/clinicas
  * Altera uma clinica pelo _id

@@ -6,11 +6,11 @@
   <title>Clínicas</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="carregaClinicas()">
   <main>
     <section class="container-formulario">      
       <h1>Clínicas</h1>
-      <form>
+      <form id="formulario-clinica" method="POST" action="api/clinicas">
         <fieldset class="card">
           <legend>Cadastro de Clínicas:</legend>
           <span class="border-top"></span>
@@ -59,7 +59,7 @@
             
             <label for="unidade-da-federacao" class="form-label">Unidade da Federação</label>
             <select required class="form-control" id="unidade-da-federacao">
-              <option value="" selected>Selecione...</option>
+              <option value="">Selecione...</option>
               <option value="AC">Acre (AC)</option>
               <option value="AL">Alagoas (AL)</option>
               <option value="AP">Amapá (AP)</option>
@@ -84,7 +84,7 @@
               <option value="RO">Rondônia (RO)</option>
               <option value="RR">Roraima (RR)</option>
               <option value="SC">Santa Catarina (SC)</option>
-              <option value="SP">São Paulo (SP)</option>
+              <option value="SP" selected>São Paulo (SP)</option>
               <option value="SE">Sergipe (SE)</option>
               <option value="TO">Tocantins (TO)</option>
             </select><br><br>
@@ -95,10 +95,10 @@
             <fieldset>
               <legend>Coordenadas</legend>         
               <label for="latitude" class="form-label">Latitude:</label><br>
-              <input type="number" class="form-control" id="latitude" name="latitude" min="-90" max="90" step="any" required><br><br>
+              <input type="number" class="form-control" id="latitude" name="latitude" value="-23.5405" min="-90" max="90" step="any" required><br><br>
 
               <label for="longitude" class="form-label">Longitude:</label><br>
-                <input type="number" class="form-control" id="longitude" name="longitude" min="-180" max="180" step="any" required><br><br>
+                <input type="number" class="form-control" id="longitude" name="longitude" value="-47.444" min="-180" max="180" step="any" required><br><br>
             </fieldset>
           </fieldset>
         </fieldset> 
@@ -144,7 +144,36 @@
     </section>
   </main>
   <footer>
-    &copy; Fatec Votorantim - Todos os direitos reservados
+    &copy; CalmaMente - Fatec Votorantim - Todos os direitos reservados
   </footer>
+  <script>
+    function carregaClinicas() {
+      // Faz uma solicitação GET para o endpoint no backend que retorna os dados das clínicas
+      fetch('/clinicas')
+        .then(response => {
+          // Verifica se a resposta da solicitação é bem-sucedida (status code 200)
+          if (response.ok) {
+            // Se sim, converte a resposta para JSON
+            return response.json();
+          } else {
+            // Se não, lança um erro com uma mensagem
+            throw new Error('Erro ao carregar clínicas');
+          }
+        })
+        .then(data => {
+          // Manipula os dados recebidos e os exibe na interface do usuário
+          exibirClinicas(data);
+        })
+        .catch(error => {
+          // Captura e trata erros que possam ocorrer durante a solicitação
+          console.error('Erro:', error);
+        });
+    }
+
+    function exibirClinicas(clinicas) {
+      // Lógica para exibir os dados das clínicas na interface do usuário
+      // Por exemplo, você pode atualizar uma tabela HTML com os dados das clínicas
+    }
+  </script>
 </body>
 </html>
