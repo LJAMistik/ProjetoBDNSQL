@@ -102,46 +102,45 @@
             </fieldset>
           </fieldset>
         </fieldset> 
-      </form>  
-      <div class="botao-enviar">
-        <button type="submit" class="botao" id="salvar">Salvar</button>
-      </div>    
-    </section>
-
-    <section class="container-tabela">
-      <div>
-        <h4 class="text-primary mt-3">Relação dos Prestadores</h4>
-        <table class="table table-bordered shadow-lg">
-          <thead>
-            <tr class="table-info">
-              <th>Razão Social</th>
-              <th>Fantasia</th>
-              <th>CNAE</th>
-              <th>Dt. Início</th>
-              <th>Geo</th>
-              <th>Opções</th>
-            </tr>
-          </thead>
-          <tbody id="dadosTabela">
-
-          </tbody>
-        </table>
-      </div>
-
-      <div class="modal fade" id="modalMensagem" tabindex="-1" role="dialog">
-        <div class="modal-dialog bg-danger" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title text-danger">Mensagem</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"
-              arial-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-              <p id="mensagem"></p>
-            </div>
-          </div>
+        <div class="botao-enviar">
+          <button type="submit" class="botao" id="salvar">Salvar</button>
         </div>
-      </div>
+      </form>  
+
+      <!-- Tabela de cadastro -->
+      <section class="container-tabela">
+        <div>
+          <h4 class="text-primary mt-3">Dados Cadastrados</h4>
+          <table class="table table-bordered shadow-lg">
+            <thead>
+              <tr class="table-info">
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Data de Cadastro</th>
+                <th>Telefone</th>
+                <th>Classificação</th>
+                <th>Especialidades</th>
+                <th>Endereço</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="nomeTd"></td>
+                <td id="emailTd"></td>
+                <td id="dataCadastroTd"></td>
+                <td id="telefoneTd"></td>
+                <td id="classificacaoTd"></td>
+                <td id="especialidadesTd"></td>
+                <td id="enderecoTd"></td>
+                <td id="latitudeTd"></td>
+                <td id="longitudeTd"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </section>
   </main>
   <footer>

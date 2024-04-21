@@ -124,7 +124,7 @@ footer {
     justify-content: center;   
 }
 
-/*Animação*/
+/* /Animação/ */
 
 .card {
     position: relative;
@@ -223,4 +223,32 @@ footer {
     100% {
         transform: translateY(-100%);
     }
+}
+
+/* Estilo da tabela */
+.container-tabela {
+    max-width: 1000px;
+    width: 80%;
+    margin: 20px auto;
+    overflow-x: auto; /* Adicione rolagem horizontal caso a tabela seja muito larga */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #a03bff;
+    padding: 8px;
+    text-align: left;
+    color: #a03bff;
+}
+
+th {
+    background-color: #1a1e33;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #282e44;
 }
