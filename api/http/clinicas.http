@@ -7,17 +7,17 @@ Content-Type: application/json
 
 ###
 // GET - Lista a clinica pelo ID
-GET {{baseURL}}/id/65ef0fe9941ad65663f24e28
+GET {{baseURL}}/id/661db66dc27292416a67b39b
 Content-Type: application/json
 
 ###
 // GET - Lista a clinica pelo nome
-GET {{baseURL}}/razao/boy
+GET {{baseURL}}/nome/2
 Content-Type: application/json
 
 ###
 // DELETE - Remove a clinica pelo id
-DELETE {{baseURL}}/65f8e26a59db6a3493300cd0
+DELETE {{baseURL}}/661db66dc27292416a67b39b
 Content-Type: application/json
 
 ###
@@ -26,7 +26,7 @@ POST {{baseURL}}
 Content-Type: application/json
 
 {
-  "nome": "Clinica de Teste 3",
+  "nome": "Clinica de Teste 13",
   "email": "contato@clinicadeteste3.com",
   "data_cadastro": "09/04/2024",
   "telefone": "(15) 33333-3333",
@@ -63,9 +63,9 @@ Content-Type: application/json
 
 {
   "_id": {
-    "$oid": "661db66dc27292416a67b39e"
+    "$oid": "661db66dc27292416a67b39f"
   },
-  "nome": "Clinica de Teste 4", alterado novamentes
+  "nome": "Clinica de Teste 4 - ALTERADO PARA TESTES",
   "email": "contato@clinicadeteste4.com",
   "data_cadastro": "09/04/2024",
   "telefone": "(15) 44444-4444",
