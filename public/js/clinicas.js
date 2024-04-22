@@ -62,10 +62,10 @@ document.getElementById('formulario-clinica').addEventListener('submit', functio
     let clinicas = {} // Objeto clinicas
     clinicas = {
         "nome": document.getElementById('nome').value,
-        "email": document.getElementById(email).value,
+        "email": document.getElementById('email').value,
         "data_cadastro": document.getElementById('data-cadastro').value,
         "telefone": document.getElementById('telefone').value,
-        "classificacao": document.getElementById(classificacao).value,
+        "classificacao": document.getElementById('classificacao').value,
         "especialidades": document.getElementById('especialidades').value,
         "endereco": {
             "logradouro": document.getElementById('logradouro').value,
