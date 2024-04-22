@@ -46,7 +46,7 @@
             <input type="text" class="form-control" id="numero" name="numero" value="1234"><br><br>
 
             <label for="complemento" class="form-label">Complemento:</label><br>
-            <textarea class="form-control" id="complemento9" name="complemento" ></textarea><br><br>
+            <textarea class="form-control" id="complemento" name="complemento" ></textarea><br><br>
             
             <label for="bairro" class="form-label">Bairro:</label><br>
             <input type="text" class="form-control" id="bairro" name="bairro" value="Centro"><br><br>
@@ -103,7 +103,7 @@
           </fieldset>
         </fieldset> 
         <div class="botao-enviar">
-          <button type="submit" class="botao" id="salvar "onclick="salvaClinicas()">Salvar</button>
+          <button type="submit" class="botao" id="salvar">Salvar</button>
         </div>
       </form>  
 
@@ -111,7 +111,7 @@
       <section class="container-tabela">
         <div>
           <h4 class="text-primary mt-3">Dados Cadastrados</h4>
-          <table class="table table-bordered shadow-lg">
+          <table class="table table-bordered shadow-lg" id="tabela-clinicas">
             <thead>
               <tr class="table-info">
                 <th>Nome</th>
@@ -123,20 +123,10 @@
                 <th>Endereço</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td id="nomeTd"></td>
-                <td id="emailTd"></td>
-                <td id="dataCadastroTd"></td>
-                <td id="telefoneTd"></td>
-                <td id="classificacaoTd"></td>
-                <td id="especialidadesTd"></td>
-                <td id="enderecoTd"></td>
-                <td id="latitudeTd"></td>
-                <td id="longitudeTd"></td>
-              </tr>
             </tbody>
           </table>
         </div>

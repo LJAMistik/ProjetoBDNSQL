@@ -20,10 +20,8 @@ const clinicas = {
     "estado": "Estado A",
     "uf": "SP",
     "cep": "12345-000",
-    "localizacao": {
-      "type": "Point",
       "coordinates": [-12.3456, -12.3456]
-    }
+    
   }
 }
 
@@ -55,13 +53,11 @@ const clinicas2 = {
     "estado": "Estado B",
     "uf": "SP",
     "cep": "23456-000",
-    "localizacao": {
-      "type": "Point",
       "coordinates": [
         -12.3456,
         -12.3456
       ]
-    }
+    
   }
 }
 db.prestadores.insertOne(clinicas2)

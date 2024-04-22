@@ -11,49 +11,47 @@ const nomeCollection = 'clinicas'
 
 const validaClinicas = [
 check('nome')
-  .not().isEmpty().trim().withMessage('O nome é obrigatório')
+  .notEmpty().trim().withMessage('O nome é obrigatório')
   .isLength({min:3}).withMessage('O nome é muito curto. Mínimo de 3')  
   .isLength({max:200}).withMessage('O nome é muito longo. Máximo de 200'),
 
   check('email')
-  .not().isEmpty().trim().withMessage('O email é obrigatório')
+  .notEmpty().trim().withMessage('O email é obrigatório')
   .isEmail().withMessage('Formato de email inválido'),
 
 check('data_cadastro')
-  .not().isEmpty().withMessage('A data de cadastro é obrigatória')
+  .notEmpty().withMessage('A data de cadastro é obrigatória')
   .toDate().withMessage('Formato de data inválido'),
 
 check('telefone')
-  .not().isEmpty().trim().withMessage('O telefone é obrigatório')
+  .notEmpty().trim().withMessage('O telefone é obrigatório')
   .isMobilePhone('pt-BR').withMessage('Formato de telefone inválido'),
 
 check('classificacao')
-  .not().isEmpty().withMessage('A classificação é obrigatória')
+  .notEmpty().withMessage('A classificação é obrigatória')
   .isFloat({ min: 0, max: 10 }).withMessage('A classificação deve estar entre 0 e 10'),
 
 check('especialidades')
-  .not().isEmpty().withMessage('As especialidades são obrigatórias')
-  .isArray({ min: 1 }).withMessage('Pelo menos uma especialidade deve ser selecionada')
-  .custom((value, { req }) => {
-    const validEspecialidades = ['1', '2', '3']; // Especialidades válidas
-    const invalidEspecialidades = value.filter(item => !validEspecialidades.includes(item));
-    if (invalidEspecialidades.length > 0) {
-      throw new Error('Especialidades inválidas');
-    }
-    return true;
-  }).withMessage('Especialidades inválidas'),
+  .notEmpty().withMessage('As especialidades são obrigatórias')
+  .isArray({ min: 1 }).withMessage('Pelo menos uma especialidade deve ser selecionada'),
+  // .custom((value, { req }) => {
+  //   const validEspecialidades = ['1', '2', '3']; // Especialidades válidas
+  //   const invalidEspecialidades = value.filter(item => !validEspecialidades.includes(item));
+  //   if (invalidEspecialidades.length > 0) {
+  //     throw new Error('Especialidades inválidas');
+  //   }
+  //   return true;
+  // }).withMessage('Especialidades inválidas'),
 
-check('cep')
-  .isLength({min:8, max:8}).withMessage('O CEP informado é inválido') 
-  .isNumeric().withMessage('O CEP deve ter apenas números') 
-  .not().isEmpty().trim().withMessage('É obrigatório informar o CEP'),
+check('endereco.cep')
+  .isLength({min:9, max:9}).withMessage('O CEP informado é inválido') 
+  .notEmpty().trim().withMessage('É obrigatório informar o CEP'),
 check('endereco.logradouro').notEmpty().withMessage('O Logradouro é obrigatório'),
 check('endereco.bairro').notEmpty().withMessage('O bairro é obrigatório'),
-check('endereco.localidade').notEmpty().withMessage('A localidade é obrigatório'),
+check('endereco.cidade').notEmpty().withMessage('A cidade é obrigatória'),
 check('endereco.uf').isLength({min: 2, max:2}).withMessage('UF é inválida'),
-check('localizacao.type').equals('Point').withMessage('Tipo inválido'),
-check('localizacao.coordinates').isArray().withMessage('Coord. inválidas'),
-check('localizacao.coordinates.*').isFloat().withMessage('Os valores das coordenadas devem ser números'),   
+check('endereco.coordinates').isArray().withMessage('Coord. inválidas'),
+check('endereco.coordinates.*').isFloat().withMessage('Os valores das coordenadas devem ser números'),   
 
 ]
 
