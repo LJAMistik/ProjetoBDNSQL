@@ -50,7 +50,8 @@ check('endereco.logradouro').notEmpty().withMessage('O Logradouro é obrigatóri
 check('endereco.bairro').notEmpty().withMessage('O bairro é obrigatório'),
 check('endereco.cidade').notEmpty().withMessage('A cidade é obrigatória'),
 check('endereco.uf').isLength({min: 2, max:2}).withMessage('UF é inválida'),
-check('endereco.coordinates').isArray().withMessage('Coord. inválidas'),
+check('endereco.coordinates').isArray().withMessage('Coord. inválidas')
+.isFloat(),
 check('endereco.coordinates.*').isFloat().withMessage('Os valores das coordenadas devem ser números'),   
 
 ]
@@ -187,13 +188,14 @@ router.put('/', validaClinicas, async(req, res) => {
       if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()})
       }
-      const prestador = await db.collection(nomeCollection)
+      const clinica = await db.collection(nomeCollection)
       .updateOne({'_id': {$eq: new ObjectId(idDocumento)}},
                  {$set: req.body})
-      res.status(202).json(clinicas) //Accepted           
+      res.status(202).json(clinica) //Accepted           
   } catch (err){
     res.status(500).json({errors: err.message})
   }
+  console.log(idDocumento)
 })
 
 export default router

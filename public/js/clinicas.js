@@ -128,7 +128,7 @@ async function buscaClinicas() {
     var colAction = newRow.insertCell();
     colAction.innerHTML = `
     <button class='btn btn-danger btn-sm botao-tabela' onclick='removeClinicas("${clinica._id}")'>Excluir</button>
-    <button class='btn btn-danger btn-sm botao-tabela'' onclick='editClinica("${clinica._id}")'>Editar</button>
+    <button class='btn btn-danger btn-sm botao-tabela'' onclick='editaClinicaExistente("${clinica._id}")'>Editar</button>
     `;
   }
 })
@@ -140,31 +140,109 @@ window.onload = function() {
 };
 
 
-
-// ###################################### FUNÇÃO PARA ATUALIZAR AS CLÍNICAS NA TABELA ######################################
-
 async function atualizaClinica(id, dadosAtualizados) {
-  await fetch(`${urlBase}/clinicas/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(dadosAtualizados)
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.updatedCount > 0) {
-      alert('Clinica atualizada com sucesso!');
-      buscaClinicas(); // Atualiza a listagem na UI
-    } else {
-      alert('Erro ao atualizar a clinica. Por favor, tente novamente.');
+  try {
+    // Obter os dados atuais da clinica pelo ID
+    const response = await fetch(`${urlBase}/clinicas/id/${id}`);
+    const clinicaAtual = await response.json();
+
+    if (!response.ok) {
+      alert('Erro ao tentar obter os dados da clinica. Por favor, tente novamente.');
+      return;
     }
-  })
-  .catch(error => {
-    console.error('Erro ao atualizar a clinica:', error);
-    alert('Erro ao atualizar a clinica. Por favor, tente novamente.');
-  });
+
+    // Mesclar os dados atuais com os dados atualizados
+    const clinicaNova = { ...clinicaAtual[0], ...dadosAtualizados };
+
+    // Fazer a solicitação PUT com os dados atualizados
+    const responseAtualizacao = await fetch(`${urlBase}/clinicas/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(clinicaNova)
+    });
+
+    if (responseAtualizacao.ok) {
+      const data = await responseAtualizacao.json();
+      if (data.updatedCount > 0) {
+        alert('Clinica atualizada com sucesso!');
+        buscaClinicas(); // Atualiza a listagem na UI
+      } else {
+        alert('Erro: Nenhuma clinica foi atualizada. Verifique os dados e tente novamente.');
+      }
+    } else {
+      // Se houver um erro de rede ou um erro no servidor
+      alert('Erro ao tentar atualizar a clinica. Por favor, tente novamente.');
+    }
+  } catch (error) {
+    console.error('Erro ao tentar atualizar a clinica:', error);
+    alert('Erro ao tentar atualizar a clinica. Por favor, tente novamente.');
+  }
 }
+
+
+
+async function editaClinicaExistente(id) {
+  try {
+    // Buscar os dados da clinica existente pelo ID
+    const response = await fetch(`${urlBase}/clinicas/id/${id}`);
+    if (!response.ok) {
+      alert('Erro ao obter os dados da clinica. Por favor, tente novamente.');
+      return;
+    }
+    
+    const clinicaExistente = await response.json();
+    const dadosClinica = clinicaExistente[0]; // Supondo que apenas uma clinica seja retornada
+    
+    // Preencher os campos do formulário com os valores da clinica existente
+    document.getElementById('nome').value = dadosClinica.nome;
+    document.getElementById('email').value = dadosClinica.email;
+    document.getElementById('data_cadastro').value = dadosClinica.data_cadastro;
+    document.getElementById('telefone').value = dadosClinica.telefone;
+    document.getElementById('classificacao').value = dadosClinica.classificacao;
+    document.getElementById('especialidades').value = dadosClinica.especialidades.join(',');
+    document.getElementById('logradouro').value = dadosClinica.endereco.logradouro;
+    document.getElementById('complemento').value = dadosClinica.endereco.complemento;
+    document.getElementById('bairro').value = dadosClinica.endereco.bairro;
+    document.getElementById('cidade').value = dadosClinica.endereco.cidade;
+    document.getElementById('unidade-da-federacao').value = dadosClinica.endereco.uf;
+    document.getElementById('cep').value = dadosClinica.endereco.cep;
+    document.getElementById('latitude').value = dadosClinica.endereco.coordinates[0];
+    document.getElementById('longitude').value = dadosClinica.endereco.coordinates[1];
+    
+    // Adicionar um evento de clique ao botão de enviar do formulário para chamar a função de atualização com os dados preenchidos
+    document.getElementById('formulario-clinica').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const dadosAtualizados = {
+        "nome": document.getElementById('nome').value,
+        "email": document.getElementById('email').value,
+        "data_cadastro": document.getElementById('data_cadastro').value,
+        "telefone": document.getElementById('telefone').value,
+        "classificacao": document.getElementById('classificacao').value,
+        "especialidades": document.getElementById('especialidades').value.split(','),
+        "endereco": {
+          "logradouro": document.getElementById('logradouro').value,
+          "complemento": document.getElementById('complemento').value,
+          "bairro": document.getElementById('bairro').value,
+          "cidade": document.getElementById('cidade').value,
+          "uf": document.getElementById('unidade-da-federacao').value,
+          "cep": document.getElementById('cep').value,
+          "coordinates": [document.getElementById('latitude').value, document.getElementById('longitude').value]
+        }
+      };
+      
+      // Chamar a função para atualizar a clinica com os dados preenchidos
+      atualizaClinica(id, dadosAtualizados);
+    });
+    
+  } catch (error) {
+    console.error('Erro ao tentar editar a clinica:', error);
+    alert('Erro ao tentar editar a clinica. Por favor, tente novamente.');
+  }
+}
+
+
 
 
 
