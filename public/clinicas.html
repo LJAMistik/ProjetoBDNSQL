@@ -6,7 +6,7 @@
   <title>Clínicas</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="carregaClinicas()">
+<body>
   <main>
     <section class="container-formulario">      
       <h1>Clínicas</h1>
@@ -103,7 +103,7 @@
           </fieldset>
         </fieldset> 
         <div class="botao-enviar">
-          <button type="submit" class="botao" id="salvar">Salvar</button>
+          <button type="submit" class="botao" id="salvar "onclick="salvaClinicas()">Salvar</button>
         </div>
       </form>  
 
@@ -142,38 +142,19 @@
         </div>
       </section>
     </section>
+
+    <section class="container-modal">
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="fecharModal()">&times;</span>
+          <div id="mensagem" class="mensagem"></div>
+        </div>
+      </div>
+    </section>
   </main>
   <footer>
     &copy; CalmaMente - Fatec Votorantim - Todos os direitos reservados
   </footer>
-  <script>
-    function carregaClinicas() {
-      // Faz uma solicitação GET para o endpoint no backend que retorna os dados das clínicas
-      fetch('/clinicas')
-        .then(response => {
-          // Verifica se a resposta da solicitação é bem-sucedida (status code 200)
-          if (response.ok) {
-            // Se sim, converte a resposta para JSON
-            return response.json();
-          } else {
-            // Se não, lança um erro com uma mensagem
-            throw new Error('Erro ao carregar clínicas');
-          }
-        })
-        .then(data => {
-          // Manipula os dados recebidos e os exibe na interface do usuário
-          exibirClinicas(data);
-        })
-        .catch(error => {
-          // Captura e trata erros que possam ocorrer durante a solicitação
-          console.error('Erro:', error);
-        });
-    }
-
-    function exibirClinicas(clinicas) {
-      // Lógica para exibir os dados das clínicas na interface do usuário
-      // Por exemplo, você pode atualizar uma tabela HTML com os dados das clínicas
-    }
-  </script>
+  <script src="js/clinicas.js"></script>
 </body>
 </html>
