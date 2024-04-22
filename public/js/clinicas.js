@@ -3,6 +3,8 @@ const urlBase = 'http://localhost:4000/api'
 
 
 
+// ################################################# FUNÇÃO PARA APAGAR #################################################
+
 async function removeClinicas(id){
   if(confirm('Deseja realmente excluir esta clinicas?')){
       await fetch(`${urlBase}/clinicas/${id}`, {
@@ -17,9 +19,13 @@ async function removeClinicas(id){
       .catch(error => {
           document.getElementById('mensagem').innerHTML = `Erro ao remover a clinica: ${error.message}`
       })
-  }// Defina a função carregaClinicas() aqui
+  }
 }
-  
+
+
+
+// ######################################## FUNÇÃO PARA O FORM define o objeto #############################################
+
 document.getElementById('formulario-clinica').addEventListener('submit', function (event){
     event.preventDefault() // evita o recarregamento
     const clinicas = {
@@ -39,48 +45,55 @@ document.getElementById('formulario-clinica').addEventListener('submit', functio
             "coordinates": [document.getElementById('latitude').value, document.getElementById('longitude').value]
         }
     } /* fim do objeto */
-    //alert(JSON.stringify(clinicas)) //apenas para testes
+
     console.log(clinicas)
+
+    // chama a função para salvar o objeto
     salvaClinicas(clinicas)
 })
 
+
+
+// ################################################# FUNÇÃO PARA SALVAR #################################################
+
 async function salvaClinicas(clinicas){
   console.log(clinicas)
-    await fetch(`${urlBase}/clinicas`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(clinicas)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.acknowledged) {
-            alert('clinica incluída com sucesso!')
-            //limpamos o formulário
-            document.getElementById('formulario-clinica').reset()
-            //atualizamos a listagem
-            buscaClinicas()
-        } else if (data.errors){
- const errorMessages = data.errors.map(error => error.msg).join('\n')
- document.getElementById('mensagem').innerHTML = `<span class='text-danger'>${errorMessages}</span>`
-        }
-    })
-
+  await fetch(`${urlBase}/clinicas`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(clinicas)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.acknowledged) {
+      alert('clinica incluída com sucesso!')
+      //limpamos o formulário
+      document.getElementById('formulario-clinica').reset()
+      //atualizamos a listagem
+      buscaClinicas()
+    } else if (data.errors){
+      const errorMessages = data.errors.map(error => error.msg).join('\n')
+      document.getElementById('mensagem').innerHTML = `<span class='text-danger'>${errorMessages}</span>`
+    }
+  })
 }
 
 
+
+// ###################################### FUNÇÃO PARA CARREGAR AS CLÍNICAS NA TABELA ######################################
 
 async function buscaClinicas() {
   
   await fetch(`${urlBase}/clinicas`, {
     method: 'GET',
     headers: {
-        'Content-Type': 'application/json'
+      'Content-Type': 'application/json'
     },
-})
-.then(response => response.json())
-.then(data => {
+  })
+  .then(response => response.json())
+  .then(data => {
   var tbodyRef = document.getElementById('tabela-clinicas').getElementsByTagName('tbody')[0];
   tbodyRef.innerHTML = "";
   for (const clinica of data) {
@@ -111,10 +124,12 @@ async function buscaClinicas() {
       colLong.appendChild(document.createTextNode(clinica.endereco.coordinates[1]));
 
     }
-  var colAction = newRow.insertCell();
-  colLong.innerHTML = `<button class='btn btn-danger btn-sm' onclick='removeClinicas("${clinica._id}")'>Excluir</button>`;
-
-    console.log(clinica)
+    // Create the action cell
+    var colAction = newRow.insertCell();
+    colAction.innerHTML = `
+    <button class='btn btn-danger btn-sm botao-tabela' onclick='removeClinicas("${clinica._id}")'>Excluir</button>
+    <button class='btn btn-danger btn-sm botao-tabela'' onclick='editClinica("${clinica._id}")'>Editar</button>
+    `;
   }
 })
 }
@@ -123,5 +138,33 @@ async function buscaClinicas() {
 window.onload = function() {
   buscaClinicas()
 };
+
+
+
+// ###################################### FUNÇÃO PARA ATUALIZAR AS CLÍNICAS NA TABELA ######################################
+
+async function atualizaClinica(id, dadosAtualizados) {
+  await fetch(`${urlBase}/clinicas/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(dadosAtualizados)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.updatedCount > 0) {
+      alert('Clinica atualizada com sucesso!');
+      buscaClinicas(); // Atualiza a listagem na UI
+    } else {
+      alert('Erro ao atualizar a clinica. Por favor, tente novamente.');
+    }
+  })
+  .catch(error => {
+    console.error('Erro ao atualizar a clinica:', error);
+    alert('Erro ao atualizar a clinica. Por favor, tente novamente.');
+  });
+}
+
 
 
