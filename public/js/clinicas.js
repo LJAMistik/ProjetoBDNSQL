@@ -69,17 +69,7 @@ async function salvaClinicas(clinicas){
 
 }
 
-// ######################### MODAL ###########################
 
-// Função para exibir o modal
-function mostrarModal() {
-    document.getElementById('modal').style.display = 'block';
-}
-
-// Função para fechar o modal
-function fecharModal() {
-    document.getElementById('modal').style.display = 'none';
-}
 
 async function buscaClinicas() {
   
@@ -133,3 +123,5 @@ async function buscaClinicas() {
 window.onload = function() {
   buscaClinicas()
 };
+
+
