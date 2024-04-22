@@ -10,7 +10,6 @@ const { db, ObjectId } = await connectToDatabase()
 const nomeCollection = 'clinicas'
 
 const validaClinicas = [
-
 check('nome')
   .not().isEmpty().trim().withMessage('O nome é obrigatório')
   .isLength({min:3}).withMessage('O nome é muito curto. Mínimo de 3')  
@@ -22,7 +21,7 @@ check('nome')
 
 check('data_cadastro')
   .not().isEmpty().withMessage('A data de cadastro é obrigatória')
-  .isISO8601().toDate().withMessage('Formato de data inválido'),
+  .toDate().withMessage('Formato de data inválido'),
 
 check('telefone')
   .not().isEmpty().trim().withMessage('O telefone é obrigatório')

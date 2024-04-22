@@ -1,201 +1,139 @@
-import express from 'express'
-import { connectToDatabase } from '../utils/mongodb.js'
-import { check, validationResult } from 'express-validator'
+// const urlBase = 'https://backend-rest-mongodb.vercel.app/api'
+const urlBase = 'http://localhost:4000/api'
 
-const router = express.Router()
 
-// Conectar ao banco de dados
 
-const { db, ObjectId } = await connectToDatabase()
-const nomeCollection = 'clinicas'
+// ############################### Função para CARREGAR a lista de Clínicas e exbir na tabela ##############################
 
-const validaClinicas = [
-check('nome')
-  .not().isEmpty().trim().withMessage('O nome é obrigatório')
-  .isLength({min:3}).withMessage('O nome é muito curto. Mínimo de 3')  
-  .isLength({max:200}).withMessage('O nome é muito longo. Máximo de 200'),
-
-  check('email')
-  .not().isEmpty().trim().withMessage('O email é obrigatório')
-  .isEmail().withMessage('Formato de email inválido'),
-
-check('data_cadastro')
-  .not().isEmpty().withMessage('A data de cadastro é obrigatória')
-  .toDate().withMessage('Formato de data inválido'),
-
-check('telefone')
-  .not().isEmpty().trim().withMessage('O telefone é obrigatório')
-  .isMobilePhone('pt-BR').withMessage('Formato de telefone inválido'),
-
-check('classificacao')
-  .not().isEmpty().withMessage('A classificação é obrigatória')
-  .isFloat({ min: 0, max: 10 }).withMessage('A classificação deve estar entre 0 e 10'),
-
-check('especialidades')
-  .not().isEmpty().withMessage('As especialidades são obrigatórias')
-  .isArray({ min: 1 }).withMessage('Pelo menos uma especialidade deve ser selecionada')
-  .custom((value, { req }) => {
-    const validEspecialidades = ['1', '2', '3']; // Especialidades válidas
-    const invalidEspecialidades = value.filter(item => !validEspecialidades.includes(item));
-    if (invalidEspecialidades.length > 0) {
-      throw new Error('Especialidades inválidas');
-    }
-    return true;
-  }).withMessage('Especialidades inválidas'),
-
-check('cep')
-  .isLength({min:8, max:8}).withMessage('O CEP informado é inválido') 
-  .isNumeric().withMessage('O CEP deve ter apenas números') 
-  .not().isEmpty().trim().withMessage('É obrigatório informar o CEP'),
-check('endereco.logradouro').notEmpty().withMessage('O Logradouro é obrigatório'),
-check('endereco.bairro').notEmpty().withMessage('O bairro é obrigatório'),
-check('endereco.localidade').notEmpty().withMessage('A localidade é obrigatório'),
-check('endereco.uf').isLength({min: 2, max:2}).withMessage('UF é inválida'),
-check('localizacao.type').equals('Point').withMessage('Tipo inválido'),
-check('localizacao.coordinates').isArray().withMessage('Coord. inválidas'),
-check('localizacao.coordinates.*').isFloat().withMessage('Os valores das coordenadas devem ser números'),   
-
-]
-
-/**
- * GET /api/clinicas
- * Lista todas clinicas
- * Parâmetros: limit, skip e order
- */
-router.get('/', async (req, res) => {
-  const { limit, skip, order } = req.query //Obter da URL
-  try {
-    const docs = []
-    await db.collection(nomeCollection)
-      .find()
-      .limit(parseInt(limit) || 10)
-      .skip(parseInt(skip) || 0)
-      .sort({ order: 1 })
-      .forEach((doc) => {
-        docs.push(doc)
-      })
-    res.status(200).json(docs)
-  } catch (err) {
-    res.status(500).json(
-      {
-        message: 'Erro ao obter a listagem das clínicas',
-        error: `${err.message}`
-      })
-  }
-})
-
-/**
- * GET /api/clinicas/id/:id
- * Lista as clinicas pelo id
- * Parâmetros: id
- */
-router.get('/id/:id', async (req, res) => {
-  try {
-    const docs = []
-    await db.collection(nomeCollection)
-      .find({ '_id': { $eq: new ObjectId(req.params.id) } }, {})
-      .forEach((doc) => {
-        docs.push(doc)
-      })
-    res.status(200).json(docs)
-  } catch (err) {
-    res.status(500).json({
-      errors: [{
-        value: `${err.message}`,
-        msg: 'Erro ao obter a clinica pelo ID',
-        param: '/id/:id'
-      }]
-    })
-  }
-})
-/**
- * GET /api/clinicas/razao/:filtro
- * Lista as clínicas pelo nome
- * Parâmetros: filtro
- */
-router.get('/nome/:filtro', async (req, res) => {
-  try {
-    const filtro = req.params.filtro.toString()
-    const docs = []
-    await db.collection(nomeCollection)
-      .find({
-        $or: [
-            { 'nome': { $regex: filtro, $options: 'i' } }
-        ]
-      })
-      .forEach((doc) => {
-        docs.push(doc)
-      })
-    res.status(200).json(docs)
-  } catch (err) {
-    res.status(500).json({
-      errors: [{
-        value: `${err.message}`,
-        msg: 'Erro ao obter a clínica pelo nome',
-        param: '/razao/:filtro'
-      }]
-    })
-  }
-})
-/**
- * DELETE /api/clinicas/:id
- * Remove a clínica pelo id
- * Parâmetros: id
- */
-router.delete('/:id', async(req, res) => {
-  const result = await db.collection(nomeCollection).deleteOne({
-    "_id": { $eq: new ObjectId(req.params.id)}
-  })
-  if (result.deletedCount === 0){
-    res.status(404).json({
-      errors: [{
-        value: `Não há nenhuma clínica com o id ${req.params.id}`,
-        msg: 'Erro ao excluir a clínica',
-        param: '/:id'
-      }]
-    })
-  } else {
-    res.status(200).send(result)
-  }
-})
-
-//  * POST /api/clinicas
-//  * Insere um nova clinica
-//  * Parâmetros: Objeto clínicas
-
-router.post('/', validaClinicas, async(req, res) => {
-  try{
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-      return res.status(400).json({ errors: errors.array()})
-    }
-    const clinicas = await db.collection(nomeCollection).insertOne(req.body)
-    res.status(201).json(clinicas) //201 é o status created            
-  } catch (err){
-    res.status(500).json({message: `${err.message} Erro no Server`})
-  }
-})
-
-/**
- * PUT /api/clinicas
- * Altera uma clinica pelo _id
- * Parâmetros: Objeto clinicas
- */
-router.put('/', validaClinicas, async(req, res) => {
-  let idDocumento = req.body._id //armazenamos o _id do documento
-  delete req.body._id //removemos o _id do body que foi recebido na req.
-  try {
-      const errors = validationResult(req)
-      if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()})
+async function carregaClinicas() {
+  const tabela = document.getElementById('dadosTabela');
+  if (tabela !== null) {
+    tabela.innerHTML = ''; // Limpa antes de recarregar
+    // Faz a requisição GET para a API REST
+    await fetch(`${urlBase}/clinicas`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
       }
-      const prestador = await db.collection(nomeCollection)
-      .updateOne({'_id': {$eq: new ObjectId(idDocumento)}},
-                 {$set: req.body})
-      res.status(202).json(clinicas) //Accepted           
-  } catch (err){
-    res.status(500).json({errors: err.message})
+    })
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(clinicas => {
+        tabela.innerHTML += `
+          <tr>
+            <td>${clinicas.nome}</td>
+            <td>${clinicas.email}</td>
+            <td>${new Date(clinicas.data_cadastro).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}</td>
+            <td>${clinicas.telefone}</td>
+            <td>${clinicas.classificacao}</td>
+            <td>${clinicas.especialidades}</td>
+            <td>${clinicas.latitude}</td>
+            <td>${clinicas.longitude}</td>
+            <td><button class='btn btn-danger btn-sm' onclick='removeClinicas("${clinicas._id}")'>🗑 Excluir </button></td>
+          </tr>
+        `;
+      });
+    });
+  } else {
+    console.error("Elemento 'dadosTabela' não encontrado.");
   }
+}
+
+// Chama a função para Carregar a lista de Clínicas
+
+carregaClinicas();
+
+
+
+// ############################### Função para APAGAR a Clínica e atualizar la na tabela #################################
+
+async function removeClinicas(id){
+  if(confirm('Deseja realmente excluir esta clinica?')){
+    await fetch(`${urlBase}/clinicas/${id}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.deletedCount > 0){carregaClinicas() //atualizamos a UI
+        }
+    })
+    .catch(error => {
+        document.getElementById('mensagem').innerHTML = `Erro ao remover a clinica: ${error.message}`
+        resultadoModal.show() //exibe o modal com o erro
+    })
+  }  
+}
+
+
+
+// ##################### Função para TRATAR do submit do form e CRIAR um objeto desses dados ############################
+
+document.getElementById('formulario-clinica').addEventListener('submit', function (event){
+  event.preventDefault() // evita o recarregamento
+  let clinicas = {} // Objeto clinicas
+  clinicas = {
+    "nome": document.getElementById('nome').value,
+    "email": document.getElementById('email').value,
+    "data_cadastro": document.getElementById('data_cadastro').value,
+    "telefone": document.getElementById('telefone').value,
+    "classificacao": document.getElementById('classificacao').value,
+    "especialidades": document.getElementById('especialidades').value,
+    "endereco": {
+      "logradouro": document.getElementById('logradouro').value,
+      "complemento": document.getElementById('complemento').value,
+      "bairro": document.getElementById('bairro').value,
+      "cidade": document.getElementById('cidade').value,
+      "uf": document.getElementById('unidade-da-federacao').value,
+      "cep": document.getElementById('cep').value,
+    }
+  } /* fim do objeto */
+  
+  // Em seguida chama a função para SALVAR esse objeto
+  salvaClinicas(clinicas)
 })
 
-export default router
+
+
+// ##################### Função para SALVAR - Envia os dados para o servidor  ############################
+
+async function salvaClinicas(clinicas){
+  await fetch(`${urlBase}/clinicas`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(clinicas)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.acknowledged) {
+      alert('clinica incluída com sucesso!')
+      //limpamos o formulário
+      document.getElementById('formulario-clinica').reset()
+      //atualizamos a listagem
+      carregaClinicas()
+    } else if (data.errors){
+        const errorMessages = data.errors.map(error => error.msg).join('\n')
+        document.getElementById('mensagem').innerHTML = `<span class='text-danger'>${errorMessages}</span>`
+        resultadoModal.show() //Mostra o modal
+      }
+    })
+
+}
+
+
+
+
+// ######################### MODAL ###########################
+
+// Função para exibir o modal
+function mostrarModal() {
+    document.getElementById('modal').style.display = 'block';
+}
+
+// Função para fechar o modal
+function fecharModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
