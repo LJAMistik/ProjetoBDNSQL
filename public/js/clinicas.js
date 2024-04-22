@@ -61,23 +61,19 @@ document.getElementById('formulario-clinica').addEventListener('submit', functio
     event.preventDefault() // evita o recarregamento
     let clinicas = {} // Objeto clinicas
     clinicas = {
-        "cnpj": document.getElementById('cnpj1').value,
-        "razao_social": document.getElementById('razao-social2').value,
-        "nome_fantasia": document.getElementById('nome-fantasia3').value,
-        "cnae_fiscal": document.getElementById('cnae14').value,
-        "data_inicio_atividade": document.getElementById('data-de-inicio-da-atividade16').value,
-        "localizacao": {
-            "type": "Point",
-            "coordinates": [document.getElementById('latitude11').value,
-                            document.getElementById('longitude12').value]
-        },
-        "cep": document.getElementById('cep5').value,
+        "nome": document.getElementById('nome').value,
+        "email": document.getElementById(email).value,
+        "data_cadastro": document.getElementById('data-cadastro').value,
+        "telefone": document.getElementById('telefone').value,
+        "classificacao": document.getElementById(classificacao).value,
+        "especialidades": document.getElementById('especialidades').value,
         "endereco": {
-            "logradouro": document.getElementById('logradouro6').value,
-            "complemento": document.getElementById('complemento9').value,
-            "bairro": document.getElementById('bairro7').value,
-            "localidade": document.getElementById('localidade8').value,
-            "uf": document.getElementById('unidade-da-federacao10').value
+            "logradouro": document.getElementById('logradouro').value,
+            "complemento": document.getElementById('complemento').value,
+            "bairro": document.getElementById('bairro').value,
+            "cidade": document.getElementById('cidade').value,
+            "uf": document.getElementById('unidade-da-federacao').value,
+            "cep": document.getElementById('cep').value,
         }
     } /* fim do objeto */
     //alert(JSON.stringify(clinicas)) //apenas para testes
