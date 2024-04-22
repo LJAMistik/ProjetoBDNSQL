@@ -10,20 +10,7 @@ const { db, ObjectId } = await connectToDatabase()
 const nomeCollection = 'clinicas'
 
 const validaClinicas = [
-check('cnpj')
-  .not().isEmpty().trim().withMessage('É obrigatório informar o cnpj')
-  .isNumeric().withMessage('O CNPJ deve ter apenas números')
-  .isLength({min:14, max:14}).withMessage('O CNPJ deve ter 14 números')
-  .custom(async (cnpj, { req }) => {
-     const contaClinica = await db.collection(nomeCollection)
-     .countDocuments({
-      'cnpj': cnpj,
-      '_id': { $ne: new ObjectId(req.body._id) } // Excluir o documento atual da comparação
-    })
-     if(contaClinica > 0){
-      throw new Error('O CNPJ informado já está cadastrado!')
-     }
-  }),
+
 check('nome')
   .not().isEmpty().trim().withMessage('O nome é obrigatório')
   .isLength({min:3}).withMessage('O nome é muito curto. Mínimo de 3')  
