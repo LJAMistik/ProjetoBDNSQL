@@ -31,7 +31,7 @@ document.getElementById('formulario-clinica').addEventListener('submit', functio
     const clinicas = {
         "nome": document.getElementById('nome').value,
         "email": document.getElementById('email').value,
-        "data_cadastro": document.getElementById('data_cadastro').value,
+        "data_cadastro": new Date(document.getElementById('data_cadastro').value),
         "telefone": document.getElementById('telefone').value,
         "classificacao": document.getElementById('classificacao').value,
         "especialidades": document.getElementById('especialidades').value.split(','),
@@ -72,6 +72,23 @@ async function salvaClinicas(clinicas) {
       alert('Clínica incluída com sucesso!');
       // Limpamos o formulário
       document.getElementById('formulario-clinica').reset();
+      // Limpa os valores preenchidos automaticamente
+      document.getElementById('nome').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('data_cadastro').value = '';
+      document.getElementById('telefone').value = '';
+      document.getElementById('classificacao').value = '';
+      document.getElementById('especialidades').value = '';
+      document.getElementById('complemento').value = '';
+      document.getElementById('logradouro').value = '';
+      document.getElementById('numero').value = '';
+      document.getElementById('bairro').value = '';
+      document.getElementById('cidade').value = '';
+      document.getElementById('unidade-da-federacao').selectedIndex = 0;
+      document.getElementById('cep').value = '';
+      document.getElementById('latitude').value = '';
+      document.getElementById('longitude').value = '';
+
       // Atualizamos a listagem
       buscaClinicas();
     } else if (data.errors) {
@@ -91,7 +108,6 @@ async function salvaClinicas(clinicas) {
 // ###################################### FUNÇÃO PARA CARREGAR AS CLÍNICAS NA TABELA ####################################
 
 async function buscaClinicas() {
-  
   await fetch(`${urlBase}/clinicas`, {
     method: 'GET',
     headers: {
@@ -100,49 +116,53 @@ async function buscaClinicas() {
   })
   .then(response => response.json())
   .then(data => {
-  var tbodyRef = document.getElementById('tabela-clinicas').getElementsByTagName('tbody')[0];
-  tbodyRef.innerHTML = "";
-  for (const clinica of data) {
-    
-    // Insert a row at the end of table
-    var newRow = tbodyRef.insertRow();
+    var tbodyRef = document.getElementById('tabela-clinicas').getElementsByTagName('tbody')[0];
+    tbodyRef.innerHTML = "";
+    for (const clinica of data) {
+      // Insert a row at the end of table
+      var newRow = tbodyRef.insertRow();
 
-    // Insert a cell at the end of the row
-    var colNome = newRow.insertCell();
-    colNome.appendChild(document.createTextNode(clinica.nome));
-    var colEmail = newRow.insertCell();
-    colEmail.appendChild(document.createTextNode(clinica.email));
-    var colDataCadastro = newRow.insertCell();
-    colDataCadastro.appendChild(document.createTextNode(clinica.data_cadastro));
-    var colTelefone = newRow.insertCell();
-    colTelefone.appendChild(document.createTextNode(clinica.telefone));
-    var colClassificacao = newRow.insertCell();
-    colClassificacao.appendChild(document.createTextNode(clinica.classificacao));
-    var colEspecialidades = newRow.insertCell();
-    colEspecialidades.appendChild(document.createTextNode(clinica.especialidades.toString()));
-    var colEndereco = newRow.insertCell();
-    colEndereco.appendChild(document.createTextNode(clinica.endereco.logradouro));
-    var colLat = newRow.insertCell();
-    var colLong = newRow.insertCell();
+      // Insert a cell at the end of the row
+      var colNome = newRow.insertCell();
+      colNome.appendChild(document.createTextNode(clinica.nome));
+      var colEmail = newRow.insertCell();
+      colEmail.appendChild(document.createTextNode(clinica.email));
+      var colDataCadastro = newRow.insertCell();
+      var dataCadastro = new Date(clinica.data_cadastro);
+      // Adiciona 3 horas ao timestamp para ajustar para o fuso horário de Brasília (UTC-3)
+      dataCadastro.setHours(dataCadastro.getHours() + 3);
+      var dataFormatada = dataCadastro.toLocaleDateString('pt-BR');
+      colDataCadastro.appendChild(document.createTextNode(dataFormatada));
+      var colTelefone = newRow.insertCell();
+      colTelefone.appendChild(document.createTextNode(clinica.telefone));
+      var colClassificacao = newRow.insertCell();
+      colClassificacao.appendChild(document.createTextNode(clinica.classificacao));
+      var colEspecialidades = newRow.insertCell();
+      colEspecialidades.appendChild(document.createTextNode(clinica.especialidades.toString()));
+      var colEndereco = newRow.insertCell();
+      colEndereco.appendChild(document.createTextNode(clinica.endereco.logradouro));
+      var colLat = newRow.insertCell();
+      var colLong = newRow.insertCell();
 
-    if(!!clinica.endereco.coordinates) {
-      colLat.appendChild(document.createTextNode(clinica.endereco.coordinates[0]));
-      colLong.appendChild(document.createTextNode(clinica.endereco.coordinates[1]));
-
+      if(!!clinica.endereco.coordinates) {
+        colLat.appendChild(document.createTextNode(clinica.endereco.coordinates[0]));
+        colLong.appendChild(document.createTextNode(clinica.endereco.coordinates[1]));
+      }
+      
+      // Create the action cell
+      var colAction = newRow.insertCell();
+      colAction.innerHTML = `
+        <button class='btn btn-danger btn-sm botao-tabela' onclick='removeClinicas("${clinica._id}")'>Excluir</button>
+        <button class='btn btn-danger btn-sm botao-tabela'' onclick='editaClinicaExistente("${clinica._id}")'>Editar</button>
+      `;
     }
-    // Create the action cell
-    var colAction = newRow.insertCell();
-    colAction.innerHTML = `
-    <button class='btn btn-danger btn-sm botao-tabela' onclick='removeClinicas("${clinica._id}")'>Excluir</button>
-    <button class='btn btn-danger btn-sm botao-tabela'' onclick='editaClinicaExistente("${clinica._id}")'>Editar</button>
-    `;
-  }
-})
+  })
 }
 
 window.onload = function() {
-  buscaClinicas()
+  buscaClinicas();
 };
+
 
 
 

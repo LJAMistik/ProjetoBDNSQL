@@ -10,15 +10,15 @@ ok - caso os campos obrigatorios não sejam preenchidos, informar na UI
 
 ok - Existiam os campos estado e uf. Remover o estado
 
-[FALTA FAZER] Após inserir, limpar o formulário. (reset)
+ok - Após inserir, limpar o formulário. (reset)
 
-[FALTA FAZER] O campo data de cadastro não está sendo salvo. Ex: 20/02/2020
+ok - O campo data de cadastro não está sendo salvo. Ex: 20/02/2020
 
 [FALTA FAZER] A edição do registro não está funcionando
 
 OK - Na mensagem de exclusão, deixar a palavra clínicas no singular
 
-[FALTA FAZER] alterar o campo data de cadastro para input='date'
+ok - alterar o campo data de cadastro para input='date'
 
 [FAZENDO - TA COM BUGS] implementar na UI a busca pelo nome da clínica (chamando a API)
 
