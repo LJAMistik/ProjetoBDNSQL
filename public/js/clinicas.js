@@ -56,29 +56,35 @@ document.getElementById('formulario-clinica').addEventListener('submit', functio
 
 // ################################################# FUNÇÃO PARA SALVAR #################################################
 
-async function salvaClinicas(clinicas){
-  console.log(clinicas)
-  await fetch(`${urlBase}/clinicas`, {
-    method: 'POST',
-    headers: {
+async function salvaClinicas(clinicas) {
+  console.log(clinicas);
+  try {
+    const response = await fetch(`${urlBase}/clinicas`, {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(clinicas)
-  })
-  .then(response => response.json())
-  .then(data => {
+      },
+      body: JSON.stringify(clinicas)
+    });
+    const data = await response.json();
+    
     if (data.acknowledged) {
-      alert('clinica incluída com sucesso!')
-      //limpamos o formulário
-      document.getElementById('formulario-clinica').reset()
-      //atualizamos a listagem
-      buscaClinicas()
-    } else if (data.errors){
-      const errorMessages = data.errors.map(error => error.msg).join('\n')
-      document.getElementById('mensagem').innerHTML = `<span class='text-danger'>${errorMessages}</span>`
+      alert('Clínica incluída com sucesso!');
+      // Limpamos o formulário
+      document.getElementById('formulario-clinica').reset();
+      // Atualizamos a listagem
+      buscaClinicas();
+    } else if (data.errors) {
+      // Construir a mensagem de erro para o alert
+      const errorMessages = data.errors.map(error => error.msg).join('\n');
+      alert(errorMessages);
     }
-  })
+  } catch (error) {
+    console.error('Erro ao enviar o formulário:', error);
+    alert('Erro ao enviar o formulário. Tente novamente mais tarde.');
+  }
 }
+
 
 
 

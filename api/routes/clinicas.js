@@ -12,8 +12,8 @@ const nomeCollection = 'clinicas'
 const validaClinicas = [
 check('nome')
   .notEmpty().trim().withMessage('O nome é obrigatório')
-  .isLength({min:3}).withMessage('O nome é muito curto. Mínimo de 3')  
-  .isLength({max:200}).withMessage('O nome é muito longo. Máximo de 200'),
+  .isLength({min:3}).withMessage('O nome é muito curto. Mínimo de 3 caracteres')  
+  .isLength({max:200}).withMessage('O nome é muito longo. Máximo de 200 caracteres'),
 
   check('email')
   .notEmpty().trim().withMessage('O email é obrigatório')

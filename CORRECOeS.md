@@ -6,7 +6,7 @@ ok - adicionar um maxlength no telefone
 
 ok - adicionar um maxlength no cep
 
-[FALTA FAZER] caso os campos obrigatorios não sejam preenchidos, informar na UI
+ok - caso os campos obrigatorios não sejam preenchidos, informar na UI
 
 ok - Existiam os campos estado e uf. Remover o estado
 
