@@ -6,7 +6,7 @@ const urlBase = 'http://localhost:4000/api'
 // ################################################# FUNÇÃO PARA APAGAR #################################################
 
 async function removeClinicas(id){
-  if(confirm('Deseja realmente excluir esta clinicas?')){
+  if(confirm('Deseja realmente excluir esta clinica?')){
       await fetch(`${urlBase}/clinicas/${id}`, {
           method: 'DELETE',
           headers: {'Content-Type': 'application/json'}
@@ -24,7 +24,7 @@ async function removeClinicas(id){
 
 
 
-// ######################################## FUNÇÃO PARA O FORM define o objeto #############################################
+// #################################### FUNÇÃO PARA O FORM DEFINIR O OBJETO #############################################
 
 document.getElementById('formulario-clinica').addEventListener('submit', function (event){
     event.preventDefault() // evita o recarregamento
@@ -82,7 +82,7 @@ async function salvaClinicas(clinicas){
 
 
 
-// ###################################### FUNÇÃO PARA CARREGAR AS CLÍNICAS NA TABELA ######################################
+// ###################################### FUNÇÃO PARA CARREGAR AS CLÍNICAS NA TABELA ####################################
 
 async function buscaClinicas() {
   
@@ -134,11 +134,13 @@ async function buscaClinicas() {
 })
 }
 
-
 window.onload = function() {
   buscaClinicas()
 };
 
+
+
+// ############################## FUNÇÃO PARA ATUALIZAR OS DADOS DE UMA CLINICA JÁ EXISTENTE ############################
 
 async function atualizaClinica(id, dadosAtualizados) {
   try {
@@ -182,6 +184,8 @@ async function atualizaClinica(id, dadosAtualizados) {
 }
 
 
+
+// ########################### FUNÇÃO PARA EDITAR OS DADOS DE UMA CLINICA JÁ EXISTENTE ##################################
 
 async function editaClinicaExistente(id) {
   try {
@@ -241,6 +245,91 @@ async function editaClinicaExistente(id) {
     alert('Erro ao tentar editar a clinica. Por favor, tente novamente.');
   }
 }
+
+
+
+// ############################################## FUNÇÃO PESQUISAR CLÍNICAS #############################################
+
+function buscarClinica() {
+  const termoBusca = document.getElementById('searchClinic').value;
+  window.location.href = `/clinicas/busca?nome=${termoBusca}`;
+  
+  // Realiza uma chamada à API
+  fetch(`/clinicas?nome=${termoBusca}`)
+      .then(response => response.json())
+      .then(data => {
+          // Limpa os resultados anteriores
+          document.getElementById('resultadoClinica').innerHTML = '';
+
+          // Exibe os resultados
+          data.forEach(clinica => {
+              const elementoClinica = document.createElement('div');
+              elementoClinica.textContent = clinica.nome; // Supondo que "nome" seja o campo que você quer exibir
+              document.getElementById('resultadoClinica').appendChild(elementoClinica);
+          });
+      })
+      .catch(error => {
+          console.error('Erro ao buscar clínicas:', error);
+      });
+}
+
+
+
+// #################################### FUNÇÃO PARA EXIBIR OS RESULTADOS DA BUSCA DE CLÍNICAS ###########################
+
+  function exibirResultadosClinicas(resultados) {
+    const divResultado = document.getElementById('resultadoClinica');
+    divResultado.innerHTML = ''; // Limpa quaisquer resultados anteriores
+
+    if (resultados.length === 0) {
+      divResultado.innerHTML = '<p>Nenhuma clínica encontrada.</p>';
+      return;
+    }
+
+    const listaClinicas = document.createElement('ul');
+    resultados.forEach(clinica => {
+      const itemClinica = document.createElement('li');
+      itemClinica.textContent = `${clinica.nome} - ${clinica.endereco.cidade}, ${clinica.endereco.uf}`;
+      listaClinicas.appendChild(itemClinica);
+    });
+    divResultado.appendChild(listaClinicas);
+  }
+
+
+
+// ########################### FUNÇÃO PARA O ENVIO DE FORMULÁRIO DE PESQUISA DE CLÍNICAS ################################
+
+  document.getElementById('form-pesquisa').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+    const termoBusca = document.getElementById('termo').value.trim();
+
+    fetch(`/api/clinicas/nome/${termoBusca}`)
+      .then(response => response.json())
+      .then(data => {
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = '';
+
+        if (data.length === 0) {
+          resultadoDiv.innerHTML = '<p>Nenhuma clínica encontrada com esse nome.</p>';
+          return;
+        }
+
+        const listaClinicas = document.createElement('ul');
+        data.forEach(clinica => {
+          const itemClinica = document.createElement('li');
+          itemClinica.textContent = `${clinica.nome} - ${clinica.endereco.cidade}, ${clinica.endereco.uf}`;
+          listaClinicas.appendChild(itemClinica);
+        });
+        resultadoDiv.appendChild(listaClinicas);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar clínicas:', error);
+        const resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = '<p>Ocorreu um erro ao buscar as clínicas. Tente novamente mais tarde.</p>';  
+        });
+      });
+    
 
 
 
