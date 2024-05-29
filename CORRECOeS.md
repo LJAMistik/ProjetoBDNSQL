@@ -24,4 +24,4 @@ ok - alterar o campo data de cadastro para input='date'
 
 2. Backend
 
-[FALTA FAZER] implementar a rota get com os 2 operadores de comparação e um 1 lógico
+ok - implementar a rota get com os 2 operadores de comparação e um 1 lógico

@@ -325,7 +325,7 @@ function buscarClinica() {
 
 // ########################### FUNÇÃO PARA O ENVIO DE FORMULÁRIO DE PESQUISA DE CLÍNICAS ################################
 
-  document.getElementById('form-pesquisa').addEventListener('submit', function(event) {
+  document.getElementById('formulario-clinica').addEventListener('submit', function(event) {
     event.preventDefault(); 
 
     const termoBusca = document.getElementById('termo').value.trim();
