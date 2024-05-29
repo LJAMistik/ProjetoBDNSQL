@@ -27,30 +27,44 @@ async function removeClinicas(id){
 // #################################### FUNÇÃO PARA O FORM DEFINIR O OBJETO #############################################
 
 document.getElementById('formulario-clinica').addEventListener('submit', function (event){
-    event.preventDefault() // evita o recarregamento
-    const clinicas = {
-        "nome": document.getElementById('nome').value,
-        "email": document.getElementById('email').value,
-        "data_cadastro": new Date(document.getElementById('data_cadastro').value),
-        "telefone": document.getElementById('telefone').value,
-        "classificacao": document.getElementById('classificacao').value,
-        "especialidades": document.getElementById('especialidades').value.split(','),
-        "endereco": {
-            "logradouro": document.getElementById('logradouro').value,
-            "complemento": document.getElementById('complemento').value,
-            "bairro": document.getElementById('bairro').value,
-            "cidade": document.getElementById('cidade').value,
-            "uf": document.getElementById('unidade-da-federacao').value,
-            "cep": document.getElementById('cep').value,
-            "coordinates": [document.getElementById('latitude').value, document.getElementById('longitude').value]
-        }
-    } /* fim do objeto */
+  event.preventDefault() // evita o recarregamento
+  const clinicas = {
+    "nome": document.getElementById('nome').value,
+    "email": document.getElementById('email').value,
+    "data_cadastro": new Date(document.getElementById('data_cadastro').value),
+    "telefone": document.getElementById('telefone').value,
+    "classificacao": document.getElementById('classificacao').value,
+    "especialidades": document.getElementById('especialidades').value.split(','),
+    "endereco": {
+      "logradouro": document.getElementById('logradouro').value,
+      "complemento": document.getElementById('complemento').value,
+      "bairro": document.getElementById('bairro').value,
+      "cidade": document.getElementById('cidade').value,
+      "uf": document.getElementById('unidade-da-federacao').value,
+      "cep": document.getElementById('cep').value,
+      "coordinates": [document.getElementById('latitude').value, document.getElementById('longitude').value]
+    }
+  } 
 
     console.log(clinicas)
 
     // chama a função para salvar o objeto
     salvaClinicas(clinicas)
 })
+
+
+
+// ############################## FUNÇÃO PARA OBTER O O VALOR DE UM ELEMENMTO HTML PELO ID #############################
+
+function getValueById(id) {
+  const element = document.getElementById(id);
+  if (element) {
+      return element.value;
+  } else {
+      console.error(`Elemento com ID ${id} não encontrado`);
+      return '';
+  }
+}
 
 
 
@@ -73,22 +87,7 @@ async function salvaClinicas(clinicas) {
       // Limpamos o formulário
       document.getElementById('formulario-clinica').reset();
       // Limpa os valores preenchidos automaticamente
-      document.getElementById('nome').value = '';
-      document.getElementById('email').value = '';
-      document.getElementById('data_cadastro').value = '';
-      document.getElementById('telefone').value = '';
-      document.getElementById('classificacao').value = '';
-      document.getElementById('especialidades').value = '';
-      document.getElementById('complemento').value = '';
-      document.getElementById('logradouro').value = '';
-      document.getElementById('numero').value = '';
-      document.getElementById('bairro').value = '';
-      document.getElementById('cidade').value = '';
-      document.getElementById('unidade-da-federacao').selectedIndex = 0;
-      document.getElementById('cep').value = '';
-      document.getElementById('latitude').value = '';
-      document.getElementById('longitude').value = '';
-
+      limpaFormulario();
       // Atualizamos a listagem
       buscaClinicas();
     } else if (data.errors) {
@@ -102,6 +101,17 @@ async function salvaClinicas(clinicas) {
   }
 }
 
+
+
+
+// ####################################### FUNÇÃO PARA LIMPAR O FORMULÁRIO ###############################################
+
+function limpaFormulario() {
+  ['nome', 'email', 'data_cadastro', 'telefone', 'classificacao', 'especialidades', 'complemento', 'logradouro', 'numero', 'bairro', 'cidade', 'cep', 'latitude', 'longitude'].forEach(id => {
+      document.getElementById(id).value = '';
+  });
+  document.getElementById('unidade-da-federacao').selectedIndex = 0;
+}
 
 
 
@@ -162,7 +172,6 @@ async function buscaClinicas() {
 window.onload = function() {
   buscaClinicas();
 };
-
 
 
 
