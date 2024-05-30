@@ -38,5 +38,5 @@ app.get('/api', (req, res)=> {
 app.use('/api/clinicas', RotasClinicas)
 //Listen
 app.listen(PORT, function(){
-    console.log(`💻Servidor rodando na porta ${PORT}`)
+    console.log(`💻Servidor rodando na porta ${PORT} http://localhost:4000/`)
 })

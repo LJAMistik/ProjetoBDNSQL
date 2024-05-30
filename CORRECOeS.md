@@ -13,8 +13,8 @@ ok - Existiam os campos estado e uf. Remover o estado
 ok - Após inserir, limpar o formulário. (reset)
 
 ok - O campo data de cadastro não está sendo salvo. Ex: 20/02/2020
-
-[FALTA FAZER] A edição do registro não está funcionando
+ 
+[FAZENDO - FALTA A PAG FRONT] A edição do registro não está funcionando
 
 OK - Na mensagem de exclusão, deixar a palavra clínicas no singular
 

@@ -199,6 +199,7 @@ router.post('/', validaClinicas, async(req, res) => {
  * Altera uma clinica pelo _id
  * Parâmetros: Objeto clinicas
  */
+
 router.put('/', validaClinicas, async(req, res) => {
   let idDocumento = req.body._id //armazenamos o _id do documento
   delete req.body._id //removemos o _id do body que foi recebido na req.
@@ -215,6 +216,37 @@ router.put('/', validaClinicas, async(req, res) => {
     res.status(500).json({errors: err.message})
   }
   console.log(idDocumento)
+})
+
+/** PATCH /api/clinicas 
+ * Altera um dado de uma clínica pelo _id - atualização parcial
+ * Parâmetros: O Objeto clinicas no corpo da requisição, _id na URL
+*/
+
+router.patch('/:id', validaClinicas, async (req, res) => {
+  const id = req.params.id
+  const { nome, email, telefone, data_cadastro, classificacao, especialidades, endereco } = req.body
+  const clinica = { nome, email, telefone, data_cadastro, classificacao, especialidades, endereco }
+
+  try {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const updateResult = await db.collection(nomeCollection).updateOne(
+      { _id: new ObjectId(id) },
+      { $set: clinica }
+    )
+
+    if (updateResult.matchedCount === 0) {
+      return res.status(404).json({ message: 'Clínica não encontrada' })
+    }
+
+    res.status(200).json({ message: 'Clínica atualizada com sucesso', updateResult })
+  } catch (error) {
+    res.status(500).json({ message: `${error.message} Erro no servidor` })
+  }
 })
 
 export default router
