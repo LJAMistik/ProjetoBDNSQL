@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário - Projeto CalmaMente</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container-principal">
+        <div class="caixa-titulo">
+            <h1 class="text-success">Cadastro de Usuário</h1>
+        </div>
+        
+        <div class="caixa-imagem">
+            <img src="images/api-usuario.jpg" width="400" alt="de um cachorrinho novo">
+        </div>
+
+        <div class="caixa-formulario">
+            <form onsubmit="return validarFormularioCadastro()">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required autocomplete="name" />
+
+                <label for="email" class="form-label">E-mail:</label>
+                <input type="email" class="form-control" id="email" name="email" required autocomplete="email" />
+
+                <label for="senha" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="senha" name="senha" required />
+
+                <label for="confirma-senha" class="form-label">Confirme a Senha:</label>
+                <input type="password" class="form-control" id="confirma-senha" name="confirma-senha" required />
+
+                <div class="botao-enviar">
+                    <button type="submit" class="botao">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+        <div class="links">
+            <a href="index.html">Já tem uma conta? Faça login</a>
+        </div>
+    </div>
+</body>
+</html>
