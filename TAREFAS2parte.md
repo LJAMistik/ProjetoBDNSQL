@@ -1,3 +1,12 @@
+    TAREFAS EXTRAS:
+
+    - arrumar os botões (estão com estilos diferentes)
+    - arrumar a rolagem da tabela para o padrão do estilo
+    - arrumar os botões da tabela para ter o mesmo tamanho
+    - criar um menu
+    
+    TAREFAS DO PROFESSOR:
+    
     Neste projeto, você terá a tarefa de criar um sistema de autenticação JWT (JSON
  WebTokens) e integrar uma interface de usuário (UI) com as APIs RESTful que
  foram desenvolvidas na entrega anterior. O objetivo é garantir que a UI seja capaz
