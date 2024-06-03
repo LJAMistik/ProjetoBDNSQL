@@ -17,15 +17,15 @@
 
  1. Implementação do JWT: Crie um sistema de autenticação JWT para
  proteger as rotas da sua API. Os usuários devem poder se autenticar,
- receber um token JWT válido e usá-lo para acessar as rotas protegidas.
+ receber um token JWT válido e usá-lo para acessar as rotas protegidas.(semi pronta)
 
  2. Criação da UI: Efetue os ajustes apontados na correção anterior e permita
  aos usuários se cadastrarem, autenticarem e interagir com as operações da
  API. (incluir, editar, listar e apagar o registro).
 
  3. Integração com API: A UI deve ser capaz de fazer solicitações às APIs para
- realizar operações básicas, incluindo GET, POST, PUT e DELETE. As
- solicitações devem incluir o token JWT para autenticação.
+ realizar operações básicas, incluindo GET, POST, "PUT" e DELETE. As
+ solicitações devem incluir o token "JWT" para autenticação.
  
  4. Exibição de Mensagens: Garanta que a UI exiba as mensagens geradas pela
  API de forma clara e legível para o usuário.
@@ -33,13 +33,13 @@
  5. Exemplo de Solicitações: Utilize a extensão REST Client no Visual Studio
  Code para criar exemplos de solicitações (usando token JWT) que
  interagem com as APIs. Documente essas chamadas de maneira clara no
- seu projeto.
+ seu projeto.(a fazer)
 
  6. Documentação da API com Swagger: Adicione documentação Swagger
  (https://swagger-autogen.github.io/docs/) à sua API para facilitar a
  compreensão e o uso por parte dos desenvolvedores. Isso inclui a
  descrição detalhada de cada rota, os parâmetros necessários, os tipos de
- resposta esperados e exemplos de solicitações.
+ resposta esperados e exemplos de solicitações.(a fazer)
 
  Dica:
  https://davibaltar.medium.com/documenta%C3%A7%C3%A3o-autom%C3%
@@ -47,9 +47,9 @@
 
  7. Implementação dos testes da API: Utilizando bibliotecas de testes com livre
  escolha, implemente no mínimo 4 diferentes testes unitários para a API
- desenvolvida. 
+ desenvolvida. (a fazer)
  
- Exemplos de testes que podem ser implementados:
+ Exemplos de testes que podem ser implementados: (escolher 4)
  
  Registro de Usuário:
  ● Verificar se um novo usuário pode ser registrado com sucesso,
