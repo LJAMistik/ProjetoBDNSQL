@@ -1,5 +1,6 @@
 import express from 'express'
-import {config} from 'dotenv'
+import { config } from 'dotenv'
+
 config() // carrega as variáveis do .env
 
 const app = express()
@@ -8,6 +9,7 @@ const app = express()
 import cors from 'cors'
 
 const {PORT} = process.env
+
 // //Import das rotas da aplicação
 import RotasClinicas from './routes/clinicas.js'
 
@@ -36,7 +38,8 @@ app.get('/api', (req, res)=> {
 
 // //Rotas da API
 app.use('/api/clinicas', RotasClinicas)
+
 //Listen
 app.listen(PORT, function(){
-    console.log(`💻Servidor rodando na porta ${PORT} http://localhost:4000/`)
+    console.log(`💻Servidor rodando na porta ${PORT}: http://localhost:${PORT}/`);
 })

@@ -292,3 +292,39 @@ tbody tr:nth-child(even) {
     background-color: #282e44;
 }
 
+.password-container {
+    position: relative;
+    width: calc(80% - 22px);
+    margin: 0 auto;
+    margin-bottom: 25px;
+}
+
+#senha, #confirma-senha {
+    width: 100%;
+    padding-right: 40px;
+    box-sizing: border-box;
+}
+
+.togglePassword {
+    width: 24px;
+    height: auto;
+    position: absolute;
+    right: 10px;
+    top: 55%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: invert(50%) sepia(100%) saturate(1300%) hue-rotate(220deg) brightness(100%) contrast(85%);
+}
+
+#togglePassword2 {
+    top: 27.5%;
+}
+
+#togglePassword3 {
+    top: 77.5%;
+}
+
+
+

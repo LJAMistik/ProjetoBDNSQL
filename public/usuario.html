@@ -23,12 +23,16 @@
 
                 <label for="email" class="form-label">E-mail:</label>
                 <input type="email" class="form-control" id="email" name="email" required autocomplete="email" />
-
-                <label for="senha" class="form-label">Senha:</label>
-                <input type="password" class="form-control" id="senha" name="senha" required />
-
-                <label for="confirma-senha" class="form-label">Confirme a Senha:</label>
-                <input type="password" class="form-control" id="confirma-senha" name="confirma-senha" required />
+                
+                <div class="password-container">
+                    <label for="senha" class="form-label">Senha:</label>
+                    <input type="password" class="form-control" id="senha" name="senha" required>
+                    <img id="togglePassword2" class="togglePassword" src="images/olho-fechado.png" alt="Mostrar Senha" title="Mostrar Senha">
+    
+                    <label for="confirma-senha" class="form-label">Confirme a Senha:</label>
+                    <input type="password" class="form-control" id="confirma-senha" name="confirma-senha" required />
+                    <img id="togglePassword3" class="togglePassword" src="images/olho-fechado.png" alt="Mostrar Senha" title="Mostrar Senha">
+                </div> 
 
                 <div class="botao-enviar">
                     <button type="submit" class="botao">Cadastrar</button>
@@ -39,5 +43,10 @@
             <a href="index.html">Já tem uma conta? Faça login</a>
         </div>
     </div>
+    <footer>
+        &copy; CalmaMente - Fatec Votorantim - Todos os direitos reservados
+    </footer>
+    <script src="js/usuario.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

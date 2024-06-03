@@ -16,18 +16,48 @@
 
         </div>
         <div class="caixa-autenticacao">
-            <label for="login" class="form-label">E-mail:</label>
-            <input type="email" class="form-control" id="login" name="login" autofocus autocomplete="email" />
+            <form id="formLogin"></form>
+                <label for="login" class="form-label">E-mail:</label>
+                <input type="email" class="form-control" id="login" name="login" autofocus autocomplete="email" />
 
-            <label for="senha" class="form-label">Senha:</label>
-            <input type="password" class="form-control" id="senha" name="senha">
-            
-            <a href="clinicas.html" class="botao">Acesse</a>
+                <div class="password-container">
+                    <label for="senha" class="form-label">Senha:</label>
+
+                    <input type="password" class="form-control" id="senha" name="senha">
+                    <img id="togglePassword" class="togglePassword" src="images/olho-fechado.png" alt="Mostrar Senha" title="Mostrar Senha">
+                </div>
+                
+                <a href="menu.html" class="botao">Acesse</a>
+            </form>
         </div>
         <div class="links">
             <a href="senha.html">Esqueceu a senha? Clique Aqui!</a>
             <a href="usuario.html">Cadastre-se!</a>    
         </div>
     </div>
+
+    <div class="modal" id="modalMensagem" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensagem</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="mensagem"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; CalmaMente - Fatec Votorantim - Todos os direitos reservados
+    </footer>
+    <script src="js/login.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
