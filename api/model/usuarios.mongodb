@@ -1,0 +1,19 @@
+use('ProjetoMongodb')
+db.usuarios.insertOne({
+    'nome': 'Teste',
+    'email': 'teste@teste.com',
+    'senha': 'Teste_123',
+    'ativo': true,
+    'tipo': 'Cliente',
+    'avatar': 
+    'https://ui-avatars.com/api/?name=Maria+José&background=F00&color=FFF'
+})
+//Criando um índice único
+
+use('ProjetoMongodb')
+db.usuarios.createIndex({'email':1},{unique:true})
+
+//Exemplo de listagem
+
+use('ProjetoMongodb')
+db.usuarios.find({},{senha:0})

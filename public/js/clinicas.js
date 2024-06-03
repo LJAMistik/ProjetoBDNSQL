@@ -367,31 +367,11 @@ function buscarClinica() {
 
       
 
-// ########################### FUNÇÃO PARA O ENVIO DE FORMULÁRIO DE CADASTRO ################################    
-
-function validarFormularioCadastro() {
-  var senha = document.getElementById("senha").value;
-  var confirmaSenha = document.getElementById("confirma-senha").value;
-
-  if (senha !== confirmaSenha) {
-      alert("As senhas não coincidem. Por favor, tente novamente.");
-      return false;
-  }
-  return true;
-}
 
 
 
-// ########################### FUNÇÃO PARA O ENVIO DE FORMULÁRIO DE RECUPERAR A SENHA ################################  
 
-function validarFormularioRecuperacao() {
-  var email = document.getElementById("email").value;
-  if (email === "") {
-      alert("Por favor, insira seu e-mail.");
-      return false;
-  }
-  return true;
-}
+
 
 
 
