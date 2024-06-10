@@ -14,7 +14,7 @@ main {
 .container-principal {
     width: 600px;
     margin: 50px auto;
-    padding: 20px;
+    padding: 40px;
     border-radius: 10px;
     border: solid #a03bff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -23,6 +23,7 @@ main {
 
 .caixa-titulo {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .caixa-imagem {
@@ -85,8 +86,8 @@ img {
     width: 24px;
     height: auto;
     position: absolute;
-    right: 10px;
-    top: 55%;
+    right: 60px;
+    top: 70%;
     transform: translateY(-50%);
     background: none;
     border: none;
@@ -432,17 +433,19 @@ tbody tr:nth-child(even) {
 }
 
 #senha, #confirma-senha {
-    width: 100%;
+    width: 75%;
     padding-right: 40px;
     box-sizing: border-box;
 }
 
 #alternar-senha2 {
-    top: 27.5%;
+    top: 987px;
+    left: 920px;
 }
 
 #alternar-senha3 {
-    top: 77.5%;
+    top: 1100px;
+    left: 920px;
 }
 /* Fim dos estilos da pagina de usuarios */
 
