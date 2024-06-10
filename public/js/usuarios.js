@@ -35,20 +35,20 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dadosUsuario)
         })
-            .then(response => response.json())
-            .then(data => {
-                //Verifica se o usuário foi cadastrado
-                if (data.acknowledged) { //se true, inseriu!
-                    alert("Usuário criado com sucesso! Por favor, efetue o login.");
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 5000);
-                } else if (data.errors) {
-                    //vamos pegar os erros da API
-                    const errorMessages = data.errors.map(error => error.msg).join('\n');
-                    //Mostrar os erros em um alerta
-                    alert("Erro ao criar usuário:\n" + errorMessages);
-                }
-            });
+        .then(response => response.json())
+        .then(data => {
+            //Verifica se o usuário foi cadastrado
+            if (data.acknowledged) { //se true, inseriu!
+                alert("Usuário criado com sucesso! Por favor, efetue o login.");
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 5000);
+            } else if (data.errors) {
+                //vamos pegar os erros da API
+                const errorMessages = data.errors.map(error => error.msg).join('\n');
+                //Mostrar os erros em um alerta
+                alert("Erro ao criar usuário:\n" + errorMessages);
+            }
+        });
     });
 });

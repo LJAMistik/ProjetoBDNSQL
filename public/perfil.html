@@ -7,36 +7,50 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav class="navbar">
+    <a class="navbar-brand" href="index.html">Fatec Votorantim</a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="menu.html">Início</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="clinicas.html">Clínicas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="perfil.html">Perfil</a>
+      </li>
+    </ul>
+  </nav>
   <main>
     <div class="container-principal">
       <div class="caixa-titulo">
           <h1 class="text-success">Perfil do Usuário</h1>
       </div>
       <div class="caixa-avatar">
-          <img src="#" width="400" alt="imagem de um cachorro superheroi com maleta de primeiros socorros">
+          <img id="avatar" src="">
       </div>
       <div class="caixa-perfil">
         <form id="formulario-perfil" method="POST" action="api/perfil">
-          <fieldset class="cardes">
             <legend class="rotulo">Dados Pessoais:</legend>
-            <span class="border-top"></span>
-            <span class="border-right"></span>
-            <span class="border-bottom"></span>
-            <span class="border-left"></span>
             
             <label for="nome" class="label-formulario">Nome:</label><br>
-            <input type="text" class="controle-formulario" id="nome" name="nome" value="Nome de Teste" required><br><br>
-            
+            <input type="text" class="controle-formulario" id="nome" name="nome" required disabled><br><br>
+            <button type="button" id="editar-nome" class="botao">Editar Nome</button>
+
             <label for="email" class="label-formulario">Email:</label><br>
-            <input type="email" class="controle-formulario" id="email" name="email" value="teste@exemplo.com" required><br><br>
-         </fieldset>
+            <input type="email" class="controle-formulario" id="email" name="email" required disabled><br><br>
+            <button type="button" id="editar-email" class="botao">Editar Email</button>
         </form>
       </div>
+    </div>
+    <div class="caixa-exclusao">
+      <button type="button" id="excluir-conta" class="botao">Excluir Conta</button>
     </div>
   </main> 
     <footer>
         &copy; CalmaMente - Fatec Votorantim - Todos os direitos reservados
     </footer>
     <script src="js/script.js"></script>
+    <script src="js/perfil.js"></script>
 </body>
 </html>
