@@ -1,7 +1,7 @@
 import express from 'express'
 import { connectToDatabase } from '../utils/mongodb.js'
 import { check, validationResult } from 'express-validator'
-// import auth from '../middleware/auth.js'
+import auth from '../middleware/auth.js'
 
 const router = express.Router()
 
@@ -52,7 +52,7 @@ const nomeCollection = 'clinicas'
  * Parâmetros: limit, skip e order
  */
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   const { limit, skip, order } = req.query
   try {
     const docs = []
@@ -81,7 +81,7 @@ router.get('/', async (req, res) => {
  * Postman: http://localhost:4000/api/clinicas/id/665732f64102325c983f4149
  */
 
-router.get('/id/:id', async (req, res) => {
+router.get('/id/:id', auth, async (req, res) => {
   try {
     const docs = []
     await db.collection(nomeCollection)
@@ -109,7 +109,7 @@ router.get('/id/:id', async (req, res) => {
  * em value: Clinica de Teste 123
  */
 
-router.get('/nome/:filtro', async (req, res) => {
+router.get('/nome/:filtro', auth, async (req, res) => {
   try {
     const filtro = req.params.filtro.toString()
     const docs = []
@@ -143,7 +143,7 @@ router.get('/nome/:filtro', async (req, res) => {
 
  */
 
-router.get('/especialidades/:especialidade/uf/:uf', async (req, res) => {
+router.get('/especialidades/:especialidade/uf/:uf', auth, async (req, res) => {
   try {
     const docs = []
     await db.collection(nomeCollection)
@@ -182,7 +182,7 @@ router.get('/especialidades/:especialidade/uf/:uf', async (req, res) => {
  * Postman: http://localhost:4000/api/clinicas
 */
 
-router.post('/', validaClinicas, async(req, res) => {
+router.post('/', auth, validaClinicas, async(req, res) => {
   //req.body.usuarioInclusao = req.usuario.id
   try{
     const errors = validationResult(req)
@@ -211,7 +211,7 @@ router.post('/', validaClinicas, async(req, res) => {
  *  }
  */
 
-router.put('/:id', validaClinicas, async (req, res) => {
+router.put('/:id', auth, validaClinicas, async (req, res) => {
   const idDocumento = req.params.id // Obter o _id do parâmetro da URL
   delete req.body._id // Remover o _id do corpo da requisição
   try {
@@ -240,7 +240,7 @@ router.put('/:id', validaClinicas, async (req, res) => {
  * isso irá apagar a Clinica de Teste 2
  */
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', auth, async(req, res) => {
   const result = await db.collection(nomeCollection).deleteOne({
     "_id": { $eq: new ObjectId(req.params.id)}
   })

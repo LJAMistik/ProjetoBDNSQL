@@ -49,7 +49,9 @@ const validaUsuario = [
         .isURL().withMessage('A URL do avatar é inválida')
 ]
 
-//POST de Usuário
+//############################################### OPERAÇÕES DO POST ######################################################
+
+// POST Usuário
 router.post('/', validaUsuario, async (req, res) => {
     /* 
  * #swagger.tags = ['Usuários']
@@ -90,6 +92,24 @@ router.post('/', validaUsuario, async (req, res) => {
             .catch(err => res.status(400).json(err))
     } //fecha o else
 })
+
+// Rota de logout
+router.post('/logout', auth, async (req, res) => {
+    try {
+        // Limpar o token JWT do cliente (por exemplo, do armazenamento local)
+        localStorage.removeItem('jwtToken');
+
+        // Opcional: invalidar o token no servidor (se estiver mantendo uma lista negra de tokens inválidos)
+        // Adicione o token à lista negra ou faça qualquer outra ação necessária para invalidar o token no servidor
+
+        res.status(200).json({ message: 'Logout bem-sucedido' });
+    } catch (err) {
+        res.status(500).json({ message: 'Erro ao fazer logout' });
+    }
+});
+
+
+//############################################### OPERAÇÕES DO GET ######################################################
 
 // GET Usuário
 router.get('/', auth, async (req, res) => {
@@ -180,3 +200,26 @@ router.post('/login', validaLogin, async (req, res) => {
 
 })
 export default router
+
+// GET Usuário por ID
+router.get('/:id', auth, async (req, res) => {
+    // Lógica para recuperar os detalhes de um usuário específico
+});
+
+// GET Detalhes do Usuário
+router.get('/:id', auth, async (req, res) => {
+    // Lógica para recuperar os detalhes de um usuário específico
+});
+
+
+//############################################### OPERAÇÕES DO PUT ######################################################
+
+router.put('/:id', auth, async (req, res) => {
+    // Lógica para atualizar informações do usuário
+});
+
+//############################################### OPERAÇÕES DO DELETE ######################################################
+
+router.delete('/:id', auth, async (req, res) => {
+    // Lógica para excluir um usuário
+});
