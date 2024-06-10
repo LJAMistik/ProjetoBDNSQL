@@ -7,23 +7,39 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container-principal">
+    <nav class="navbar">
+        <a class="navbar-brand" href="index.html">Fatec Votorantim</a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="menu.html">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="clinicas.html">Clínicas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="usuarios.html">Usuários</a>
+          </li>
+        </ul>
+      </nav>
+    <main>
+      <div class="container-principal">
         <div class="caixa-titulo">
-            <h1 class="text-success">Bem-vindo ao Menu Principal</h1>
+          <h1 class="texto-successo">Bem-vindo ao Menu Principal</h1>
         </div>
-        <div class="conteudo">
-            <!-- Conteúdo restrito aos usuários autenticados -->
-            <p>Aqui está o conteúdo restrito que apenas usuários autenticados podem ver.</p>
+        <div class="caixa-imagem">
+          <img src="imagens/api-menu.jpg" width="400" alt="de um spliz um daschound e um dalmata">
         </div>
         <div class="caixa-logout">
-            <button id="logout" class="botao">Logout</button>
+          <button id="logout" class="botao">Logout</button>
         </div>
+      </div>
+    </main> 
     <footer>
         &copy; CalmaMente - Fatec Votorantim - Todos os direitos reservados
     </footer>
-    <script src="js/usuarios.js"></script>
+    <!-- <script src="js/usuarios.js"></script>
     <script src="js/validaToken.js"></script>
     <script src="js/login.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js"></script> -->
 </body>
 </html>

@@ -1,6 +1,6 @@
 PORT = 4000
 MONGODB_URI = mongodb://127.0.0.1:27017/
 MONGODB_DB = ProjetoMongodb
-EXPIRES_IN = 24h
+EXPIRES_IN = 240h
 SECRET_KEY = suaChaveSecreta
 SENHA_USUARIO = SenhaUsuario

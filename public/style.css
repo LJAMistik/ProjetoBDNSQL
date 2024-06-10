@@ -11,9 +11,8 @@ main {
     flex-wrap: wrap;
 }
 
-
 .container-principal {
-    max-width: 600px;
+    width: 600px;
     margin: 50px auto;
     padding: 20px;
     border-radius: 10px;
@@ -35,7 +34,7 @@ img {
     border: solid #a03bff;
     border-radius: 5px;
     width: 100%;
-    max-width: 400px;
+    max-width: 320x;
     height: auto;
 }
 
@@ -43,31 +42,19 @@ img {
     text-align: center;
 }
 
-.caixa-formulario {
-    text-align: center;
-}
+/* .formulario-login {
 
-.links {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
+} */
 
-a {
-    padding: 10px;
-}
-
-.form-label {
+.label-formulario {
     display: block;
     margin-bottom: 5px;
     padding: 5px;
     text-align: center;
 }
 
-.form-control {
-    align-items: center;
+.controle-formulario {
+    display: block; 
     width: calc(80% - 22px);
     padding: 12px;
     margin-bottom: 25px;
@@ -76,12 +63,14 @@ a {
     background-color: #1a1e33;
     color: #a03bff;
     box-sizing: border-box;
+    margin-left: auto; 
+    margin-right: auto; 
 }
 
 .botao {
     display: inline-block;
     padding: 15px 40px;
-    border: solid 2px 40px;
+    border: none;
     border-radius: 5px;
     color: #a03bff;
     font-size: 24px;
@@ -92,10 +81,111 @@ a {
     outline: none;
 }
 
+.alternar-senha {
+    width: 24px;
+    height: auto;
+    position: absolute;
+    right: 10px;
+    top: 55%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: invert(50%) sepia(100%) saturate(1300%) hue-rotate(220deg) brightness(100%) contrast(85%);
+}
+
 .botao:hover {
     border-radius: 15px;
     text-shadow: 0 0 12px #a03bff;
     box-shadow: 0 0 12px 1px #a03bff;
+    outline: none;
+}
+
+.caixa-links {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.caixa-links a {
+    padding: 10px;
+}
+
+/* Estilo do modal */
+
+.modal {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none; 
+}
+
+.modal-dialog {
+    margin: auto;
+    width: 80%;
+    max-width: 400px;
+    background-color: #1a1e33;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    background-color: transparent;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid #a03bff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.modal-body {
+    color: #a03bff;
+}
+
+.close {
+    color: #a03bff;
+    font-size: 24px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+
+/* Estilo do footer */
+
+footer {
+    background-color: #1a1e33;
+    color: #a03bff;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    bottom: 0;
+  }
+/* Fim dos estilos da pagina inicial */
+
+
+
+
+
+
+/* Estilo da página de clínicas */
+
+.caixa-formulario {
+    text-align: center;
 }
 
 .botao-tabela {
@@ -123,105 +213,108 @@ a {
     max-width: 1000px; 
     width: 80%; 
     margin: 0 auto;
-    
 }
 
 h1 {
     text-align: center;
 }
 
-legend {
+.rotulo {
     text-align: center;
-    margin: 20px 0; /* Aumenta a margem superior e inferior */
-    font-size: 1.2em; /* Ajusta o tamanho do texto */
-    letter-spacing: 2px; /* Define o espaçamento entre as letras */
-    text-transform: uppercase; /* Converte o texto para maiúsculas */
+    margin: 20px 0; 
+    font-size: 1.2em; 
+    letter-spacing: 2px; 
+    text-transform: uppercase; 
 }
 
-#unidade-da-federacao::-webkit-scrollbar {
-    width: 15px; /* Largura da barra de rolagem */
+::placeholder {
+    color: #a03bff;
 }
 
-#unidade-da-federacao::-webkit-scrollbar-thumb {
-    background-color: #a03bff; /* Cor do polegar */
-    border-radius: 2px; /* Raio do polegar */
+small {
+    display: block;
+    text-align: center;
+    margin-top: 5px; 
 }
 
-/* Estilo do polegar da barra de rolagem quando estiver em hover */
-#unidade-da-federacao::-webkit-scrollbar-thumb:hover {
-    background-color: #1a1e33; /* Cor do polegar em hover */
+#unidade-federacao::-webkit-scrollbar {
+    width: 15px; 
+}
+
+#unidade-federacao::-webkit-scrollbar-thumb {
+    background-color: #a03bff; 
+    border-radius: 2px; 
+}
+
+#unidade-federacao::-webkit-scrollbar-thumb:hover {
+    background-color: #1a1e33; 
     border: solid 1px #a03bff;
 }
 
 .botao-enviar {
     text-align: center;
+    margin-bottom: 50px;
 }
 
-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;   
-}
+/* Animação */
 
-/* /Animação/ */
-
-.card {
+.cardes {
     position: relative;
     overflow: hidden;
     border: none;
+    margin-bottom: 50px;
 }
 
-.card span.border-top,
-.card span.border-bottom {
+.cardes span.border-top,
+.cardes span.border-bottom {
     position: absolute;
-    background: linear-gradient(to right, transparent, #282e44); /* Eixo X branco */
+    background: linear-gradient(to right, transparent, #282e44); 
     animation-duration: 2s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
 
-.card span.border-left,
-.card span.border-right {
+.cardes span.border-left,
+.cardes span.border-right {
     position: absolute;
-    background: linear-gradient(to bottom, transparent, #1a1e33); /* Eixo Y roxo */
+    background: linear-gradient(to bottom, transparent, #1a1e33); 
     animation-duration: 2s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
 
-
-.card span.border-top,
-.card span.border-bottom {
+.cardes span.border-top,
+.cardes span.border-bottom {
     width: 100%;
     height: 3px;
 }
 
-.card span.border-left,
-.card span.border-right {
+.cardes span.border-left,
+.cardes span.border-right {
     width: 3px;
     height: 100%;
 }
 
-.card span.border-top {
+.cardes span.border-top {
     top: 0;
     left: 0;
     animation-name: animar1;
 }
 
-.card span.border-right {
+.cardes span.border-right {
     top: 0;
     right: 0;
     animation-name: animar2;
     animation-delay: 1s;
 }
 
-.card span.border-bottom {
+.cardes span.border-bottom {
     bottom: 0;
     right: 0;
     animation-name: animar3;
 }
 
-.card span.border-left {
+.cardes span.border-left {
     bottom: 0;
     left: 0;
     animation-name: animar4;
@@ -270,6 +363,7 @@ footer {
     width: 80%;
     margin: 20px auto;
     overflow-x: auto; /* Adicione rolagem horizontal caso a tabela seja muito larga */
+    margin-bottom: 100px;
 }
 
 table {
@@ -277,22 +371,60 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
-    border: 1px solid #a03bff;
-    padding: 8px;
-    text-align: left;
+tbody tr:nth-child(even) {
+    background-color: #3e1862;
+}
+
+.barra-rolagem {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
     color: #a03bff;
 }
 
-th {
-    background-color: #1a1e33;
+.barra-rolagem th, .barra-rolagem td {
+    padding: 10px;
+    border: 1px solid #a03bff;
+    text-align: center;
 }
 
-tbody tr:nth-child(even) {
-    background-color: #282e44;
+.barra-rolagem th {
+    background-color: #0e101c;
 }
 
-.password-container {
+.caixa-busca {
+    display: flex; /* Torna o contêiner um flex container */
+    justify-content: space-between; /* Distribui o espaço entre os itens */
+    align-items: center; /* Alinha os itens verticalmente */
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha se necessário */
+    margin-top: 20px;
+}
+
+/* Estilizando o campo de digitar */
+#buscar-clinica {
+    flex: 1; /* Ocupa o espaço disponível */
+}
+
+/* Estilizando o botão */
+.caixa-busca button {
+    margin-left: 40px; /* Adiciona uma margem à esquerda para separar o botão do campo de digitar */
+}
+
+/* Estilizando a lista de resultado */
+#resultado-clinica ul li {
+    cursor: pointer;
+  }
+
+/* Fim dos estilos da pagina de clinicas */
+
+
+
+
+
+
+/* Estilo da página de usuarios */
+
+.container-senha {
     position: relative;
     width: calc(80% - 22px);
     margin: 0 auto;
@@ -305,82 +437,73 @@ tbody tr:nth-child(even) {
     box-sizing: border-box;
 }
 
-.togglePassword {
-    width: 24px;
-    height: auto;
-    position: absolute;
-    right: 10px;
-    top: 55%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    filter: invert(50%) sepia(100%) saturate(1300%) hue-rotate(220deg) brightness(100%) contrast(85%);
-}
-
-#togglePassword2 {
+#alternar-senha2 {
     top: 27.5%;
 }
 
-#togglePassword3 {
+#alternar-senha3 {
     top: 77.5%;
 }
+/* Fim dos estilos da pagina de usuarios */
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
 
-.modal-dialog {
-    margin: auto;
-    width: 80%;
-    max-width: 400px;
+
+
+
+
+/* Estilo da página do menu */
+
+/* Estilo da navebar */
+.navbar {
     background-color: #1a1e33;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.modal-content {
-    background-color: transparent;
-    border: none;
-}
+  .navbar-links {
+    display: flex;
+    gap: 20px;
+  }
 
-.modal-header, .modal-footer {
-    border-bottom: 1px solid #a03bff;
-    padding: 10px 0;
-    text-align: center;
-}
-
-.modal-title {
-    color: #a03bff;
-}
-
-.modal-body {
-    color: #a03bff;
-}
-
-.modal-footer {
-    justify-content: center;
-}
-
-.close {
+  .navbar-brand {
     color: #a03bff;
     font-size: 24px;
     font-weight: bold;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
+    text-decoration: none;
+  }
+
+  .navbar-nav {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    margin-right: 20px;
+  }
+
+  .nav-link {
+    color: #a03bff;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .nav-link:hover {
+    color: #fff;
+  }
+  
+  .caixa-logout {
+    position: fixed;
+    bottom: 60px;
     right: 20px;
+    z-index: 9999;
 }
+
+/* Fim dos estilos da pagina do menu */
+
 
 

@@ -9,8 +9,9 @@ const router = express.Router()
 const { db, ObjectId } = await connectToDatabase()
 const nomeCollection = 'usuarios'
 
-// Validações do Usuário
-
+/************
+* VALIDAÇÕES DO USUÁRIO
+/***********/
 const validaUsuario = [
     check('nome')
         .not().isEmpty().trim().withMessage('É obrigatório informar o nome')
@@ -33,7 +34,7 @@ const validaUsuario = [
         }),
     check('senha')
         .not().isEmpty().trim().withMessage('A senha é obrigatória')
-        .isLength({ min: 6 }).withMessage('A senha deve ter no mínimo 6 caracteres')
+        .isLength({ min: 6 }).withMessage('A senha deve ter no mínimo 6 carac.')
         .isStrongPassword({
             minLength: 6,
             minLowercase: 1, minUppercase: 1,
@@ -51,7 +52,6 @@ const validaUsuario = [
 ]
 
 //POST de Usuário
-
 router.post('/', validaUsuario, async (req, res) => {
     /* 
  * #swagger.tags = ['Usuários']
@@ -90,7 +90,7 @@ router.post('/', validaUsuario, async (req, res) => {
             .insertOne(req.body)
             .then(result => res.status(201).send(result))
             .catch(err => res.status(400).json(err))
-    }
+    } //fecha o else
 })
 
 // GET Usuário
@@ -178,12 +178,7 @@ router.post('/login', validaLogin, async (req, res) => {
         )
     } catch (e) {
         console.error(e)
-        res.status(500).json({
-            errors: [{
-                msg: 'Ocorreu um erro no servidor'
-            }]
-        })
     }
-})
 
+})
 export default router

@@ -39,3 +39,64 @@ JestUm-SuperTest Framework de testes JavaScript popular e leve, ideal para teste
 Acesse em: https://projeto-bdnsql.vercel.app/
 
 Grupo CalmaMente
+
+## 🧪 Testes
+Para a execução dos testes, instale os pacotes como dependência apenas de desenvolvimento:
+```
+npm install jest supertest -D
+```
+
+### Função de Cada um dos Pacotes de testes 🧪
+
+| Pacote | Descrição |
+|---|---|
+| **Jest** | Um framework de testes JavaScript popular e leve para testes unitários, testes de integração e testes de ponta a ponta. |
+| **SuperTest** | Uma biblioteca para testar APIs Node.js com o Jest ou Mocha. Ela fornece uma interface de alto nível para realizar requisições HTTP para sua API e verificar as respostas. |
+
+### Outros ajustes nos testes 🧪
+* Crie uma pasta chamada ```__tests__``` no raiz do projeto para armazenar todos os testes criados.
+* Edite o _package.json_ e informe que o framework a ser utilizado é o jest. Com isso, será possível executar o comando ```npm run test```:
+```json
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+```
+## 📃Documentação da API
+Para a geração automática da documentação, instale os pacotes a seguir:
+```
+npm i swagger-ui-express@4.3 
+npm i swagger-autogen -D
+```
+* Crie uma pasta chamada ```swagger``` dentro da pasta ```api``` do projeto para armazenar a configuração do swagger.
+* Edite o _package.json_ e informe que utilizaremos o swagger. Com isso, será possível executar o comando ```npm run doc```:
+```json
+{
+  "scripts": {
+    "doc": "node swagger.js"
+  }
+}
+```
+### Editando o api/index.js
+
+Adicione os novos imports necessários:
+```javascript
+import fs from 'fs'
+import swaggerUI from 'swagger-ui-express'
+```
+
+Crie a nova rota para a documentação:
+```javascript
+/* Rota da documentação Swagger */
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css"
+
+app.use('/api/doc', swaggerUI.serve, swaggerUI.setup(JSON.parse(fs.readFileSync('./api/swagger/swagger_output.json')),{customCss:
+      '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
+    customCssUrl: CSS_URL }))
+
+```
+
+Para testar, aponte o navegador para a url:
+
+https://seusite.com.br/api/doc

@@ -1,0 +1,434 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "📊📈API Fatec Votorantim",
+    "description": "➡️Documentação gerada automaticamente pelo módulo <a href='https://github.com/davibaltar/swagger-autogen' target='_blank'>swagger-autogen</a>."
+  },
+  "host": "backend-rest-mongodb.vercel.app",
+  "basePath": "/api",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "access-token",
+      "description": "Token de Acesso gerado após o login"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Default"
+        ],
+        "summary": "Rota default que retorna a versão da API",
+        "description": "Endpoint que retorna a versão da API",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/prestadores": {
+      "get": {
+        "tags": [
+          "Prestadores de Serviço"
+        ],
+        "summary": "Lista todos os prestadores de serviço",
+        "description": "Endpoint para obter todos os prestadores de serviço.",
+        "parameters": [
+          {
+            "name": "limit",
+            "type": "int",
+            "description": "Limite de registros por página (opcional, padrão: 10)",
+            "in": "query"
+          },
+          {
+            "name": "skip",
+            "type": "int",
+            "description": "Número de registros a pular (opcional, padrão: 0)",
+            "in": "query"
+          },
+          {
+            "name": "order",
+            "type": "string",
+            "description": "Campo de ordenação (opcional, ex: razao_social:asc)",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array com os prestadores de serviço"
+          },
+          "401": {
+            "description": "Acesso negado. É obrigatório o envio do token JWT"
+          },
+          "500": {
+            "description": "Erro ao obter a listagem dos prestadores"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Prestadores de Serviço"
+        ],
+        "summary": "Adiciona um novo prestador de serviço",
+        "description": "Endpoint para adicionar um novo prestador de serviço.",
+        "parameters": [
+          {
+            "name": "prestador",
+            "in": "body",
+            "description": "Informações do prestador de serviço",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "cnpj": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "12345345000166"
+                        }
+                      }
+                    },
+                    "razao_social": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "MARIA ALCINA TRANSPORTES LTDA."
+                        }
+                      }
+                    },
+                    "cep": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "13310160"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Criado"
+          },
+          "400": {
+            "description": "Solicitação Inválida"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Prestadores de Serviço"
+        ],
+        "summary": "Altera um prestador de serviço pelo ID",
+        "description": "Endpoint para alterar um prestador de serviço pelo ID.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Aceito"
+          },
+          "400": {
+            "description": "Solicitação Inválida"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/prestadores/{id}": {
+      "get": {
+        "tags": [
+          "Prestadores de Serviço"
+        ],
+        "summary": "Lista o prestador de serviço pelo ID",
+        "description": "Endpoint para obter um único prestador de serviço pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "id do Prestador de Serviço"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array com o prestador de serviço"
+          },
+          "401": {
+            "description": "Acesso negado. É obrigatório o envio do token JWT"
+          },
+          "500": {
+            "description": "Erro ao obter o prestador pelo ID"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Prestadores de Serviço"
+        ],
+        "summary": "Remove o prestador de serviço pelo ID",
+        "description": "Endpoint para apagar um único prestador de serviço pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "id do Prestador de Serviço a ser excluído"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registro removido com sucesso"
+          },
+          "401": {
+            "description": "Acesso negado. É obrigatório o envio do token JWT"
+          },
+          "404": {
+            "description": "Não há nenhum prestador com o id informado"
+          },
+          "500": {
+            "description": "Erro ao excluir o prestador pelo ID"
+          }
+        }
+      }
+    },
+    "/prestadores/razao/{filtro}": {
+      "get": {
+        "tags": [
+          "Prestadores de Serviço"
+        ],
+        "summary": "Lista o prestador de serviço pela razão social ou nome fantasia",
+        "description": "Endpoint para obter uma relação de prestadores de serviço pela razão social ou nome fantasia.",
+        "parameters": [
+          {
+            "name": "filtro",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "parte da razão social ou nome fantasia do Prestador de Serviço"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array com o prestador de serviço"
+          },
+          "401": {
+            "description": "Acesso negado. É obrigatório o envio do token JWT"
+          },
+          "500": {
+            "description": "Erro ao obter o prestador pelo ID"
+          }
+        }
+      }
+    },
+    "/usuarios": {
+      "post": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Adiciona um novo usuário ao sistema",
+        "description": "Endpoint para adicionar um novo usuário.",
+        "parameters": [
+          {
+            "name": "usuario",
+            "in": "body",
+            "description": "Informações do usuário",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "JOSÉ MARIA LIMA"
+                        }
+                      }
+                    },
+                    "email": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "joselima@uol.com.br"
+                        }
+                      }
+                    },
+                    "senha": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "SenhaSegura24!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Criado"
+          },
+          "400": {
+            "description": "Solicitação Inválida"
+          },
+          "403": {
+            "description": "Acesso Negado"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Lista todos os usuários do sistema",
+        "description": "Endpoint para obter todos os usuários do sistema.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/usuarios/login": {
+      "post": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Efetua o login do usuário do sistema",
+        "description": "Endpoint para efetuar o login e receber o token JWT.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "senha": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Acesso Negado"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Erro": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "example": "Erro gerado pela aplicação"
+        },
+        "msg": {
+          "type": "string",
+          "example": "Mensagem detalhando o erro"
+        },
+        "param": {
+          "type": "string",
+          "example": "URL que gerou o erro"
+        }
+      }
+    }
+  }
+}

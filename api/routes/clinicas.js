@@ -1,6 +1,7 @@
 import express from 'express'
 import { connectToDatabase } from '../utils/mongodb.js'
 import { check, validationResult } from 'express-validator'
+import auth from '../middleware/auth.js'
 
 const router = express.Router()
 
@@ -200,7 +201,7 @@ router.post('/', validaClinicas, async(req, res) => {
  * Parâmetros: Objeto clinicas
  */
 
-router.put('/', validaClinicas, async(req, res) => {
+router.put('/', auth, validaClinicas, async(req, res) => {
   let idDocumento = req.body._id //armazenamos o _id do documento
   delete req.body._id //removemos o _id do body que foi recebido na req.
   try {
@@ -217,6 +218,7 @@ router.put('/', validaClinicas, async(req, res) => {
   }
   console.log(idDocumento)
 })
+
 
 /** PATCH /api/clinicas 
  * Altera um dado de uma clínica pelo _id - atualização parcial

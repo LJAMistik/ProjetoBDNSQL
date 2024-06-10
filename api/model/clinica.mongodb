@@ -1,0 +1,61 @@
+use('ProjetoMongodb')
+
+const clinicas = {
+  "nome": "Clinica de Teste 1",
+  "email": "contato@clinicadeteste1.com",
+  "data_cadastro": "09/04/2024",
+  "telefone": "(15) 11111-1111",
+  "classificacao": "9.5",
+  "especialidades": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "endereco": {
+    "logradouro": "Rua A, 123",
+    "numero": "123",
+    "complemento": "nenhum",
+    "bairro": "Centro",
+    "cidade": "Cidade A",
+    "uf": "SP",
+    "cep": "12345-000",
+      "coordinates": [-12.3456, -12.3456]
+    
+  }
+}
+
+db.prestadores.insertOne(clinicas)
+
+
+
+use('ProjetoMongodb')
+db.clinicas.find()
+
+use('ProjetoMongodb')
+const clinicas2 = {
+  "nome": "Clinica de Teste 2",
+  "email": "contato@clinicadeteste2.com",
+  "data_cadastro": "09/04/2024",
+  "telefone": "(15) 22222-2222",
+  "classificacao": "9.3",
+  "especialidades": [
+    "2",
+    "4"
+  ],
+  "endereco": {
+    "logradouro": "Rua B, 456",
+    "numero": "456",
+    "complemento": "nenhum",
+    "bairro": "Centro",
+    "cidade": "Cidade B",
+    "uf": "SP",
+    "cep": "23456-000",
+      "coordinates": [
+        -12.3456,
+        -12.3456
+      ]
+    
+  }
+}
+db.prestadores.insertOne(clinicas2)

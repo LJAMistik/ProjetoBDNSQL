@@ -1,0 +1,30 @@
+// Teste do endpoint dos usuários
+@baseURL = http://localhost:4000/api/usuarios
+//@baseURL = https://backend-rest-mongodb.vercel.app/api/usuarios
+###
+# @prompt senha
+POST {{baseURL}}
+Content-Type: application/json
+
+{
+    "nome": "José Lima Alves",
+    "email": "josealves5@uol.com.br",
+    "senha": "{{senha}}"
+}
+
+###
+// GET - Lista todos os usuários
+GET {{baseURL}}
+Content-Type: application/json
+access-token: etJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjYzOTVmMDZiZGIxYTQyMzcyMGRjZmEyIn0sImlhdCI6MTcxNTAzNzIwMywiZXhwIjoxNzE1MTIzNjAzfQ.l76Ccoiw-_2ZfYD23SYfrGiD-1_CifmbKC0Edch-2UI
+
+###
+# @prompt senha
+// POST - Efetua o login
+POST {{baseURL}}/login
+Content-Type: application/json
+
+{
+    "email": "josealves5@uol.com.br",
+    "senha": "{{senha}}"
+}
