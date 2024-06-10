@@ -26,7 +26,7 @@ describe('Testes de Registro de Usuario', () => {
         const reponse = await request(baseURL)
         .post('/usuarios/login')
         .set('Content-Type', 'application/json')
-        .send({email:"josealves5@uol.com.br", senha: senha})
+        .send({email:"andre_silva@gmail.com.br", senha: senha})
         .expect(200); //OK
 
         token = reponse.body.access_token

@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import auth from '../middleware/auth.js'
 
 const router = express.Router()
+
 const { db, ObjectId } = await connectToDatabase()
 const nomeCollection = 'usuarios'
 
@@ -26,7 +27,7 @@ const validaUsuario = [
                 .then((email) => {
                     //verifica se não existe o ID para garantir que é inclusão
                     if (email.length && !req.params.id) {
-                        return Promise.reject(`o email ${value} já existe!`)
+                        return Promise.reject(`o email já existe!`)
                     }
                 })
         }),
@@ -199,7 +200,6 @@ router.post('/login', validaLogin, async (req, res) => {
     }
 
 })
-export default router
 
 // GET Usuário por ID
 router.get('/:id', auth, async (req, res) => {
@@ -238,5 +238,34 @@ router.put('/:id', auth, async (req, res) => {
 //############################################### OPERAÇÕES DO DELETE ######################################################
 
 router.delete('/:id', auth, async (req, res) => {
-    // Lógica para excluir um usuário
-});
+    try {
+      const result = await db.collection(nomeCollection).deleteOne({
+        "_id": new ObjectId(req.params.id)
+      });
+  
+      if (result.deletedCount === 0) {
+        return res.status(404).json({
+          errors: [{
+            value: `Não há nenhum usuário com o id ${req.params.id}`,
+            msg: 'Erro ao excluir o usuário',
+            param: '/:id'
+          }]
+        });
+      } else {
+        return res.status(200).send(result);
+      }
+    } catch (err) {
+      return res.status(500).json({
+        errors: [{
+          value: `${req.params.id}`,
+          msg: 'Erro ao excluir o usuário',
+          param: '/:id',
+          location: 'params'
+        }]
+      });
+    }
+  });
+
+export default router
+
+  

@@ -18,7 +18,7 @@ Content-Type: application/json
 // GET - Lista todos os usuários
 GET {{baseURL}}
 Content-Type: application/json
-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2NzAwYzY2NmNhYTM5ZjQwMGI1OGNiIn0sImlhdCI6MTcxODAzMjc5NiwiZXhwIjoxNzE4ODk2Nzk2fQ.gfYt2pkKkZpA-SN-kp2GqcY416dgt339k1rzgxaTTOA
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2NzUwNTBlM2M1NzE4MWYyYWZlMjk4In0sImlhdCI6MTcxODA1NDYwNywiZXhwIjoxNzE4OTE4NjA3fQ.yOsiM2qTtezlu-ZQH30FuLluEgd4RVDJTxYjSuR5m88
 
 ###
 # @prompt senha
@@ -30,3 +30,9 @@ Content-Type: application/json
     "email": "andre_silva@gmail.com.br",
     "senha": "{{senha}}"
 }
+
+###
+// DELETE - Deleta um usuário pelo ID
+DELETE {{baseURL}}/:id
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2NzUwNTBlM2M1NzE4MWYyYWZlMjk4In0sImlhdCI6MTcxODA1NDYwNywiZXhwIjoxNzE4OTE4NjA3fQ.yOsiM2qTtezlu-ZQH30FuLluEgd4RVDJTxYjSuR5m88
