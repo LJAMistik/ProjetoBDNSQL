@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Usuário - Projeto CalmaMente</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <div class="container-principal">
+      <div class="caixa-titulo">
+          <h1 class="text-success">Perfil do Usuário</h1>
+      </div>
+      <div class="caixa-avatar">
+          <img src="#" width="400" alt="imagem de um cachorro superheroi com maleta de primeiros socorros">
+      </div>
+      <div class="caixa-perfil">
+        <form id="formulario-perfil" method="POST" action="api/perfil">
+          <fieldset class="cardes">
+            <legend class="rotulo">Dados Pessoais:</legend>
+            <span class="border-top"></span>
+            <span class="border-right"></span>
+            <span class="border-bottom"></span>
+            <span class="border-left"></span>
+            
+            <label for="nome" class="label-formulario">Nome:</label><br>
+            <input type="text" class="controle-formulario" id="nome" name="nome" value="Nome de Teste" required><br><br>
+            
+            <label for="email" class="label-formulario">Email:</label><br>
+            <input type="email" class="controle-formulario" id="email" name="email" value="teste@exemplo.com" required><br><br>
+         </fieldset>
+        </form>
+      </div>
+    </div>
+  </main> 
+    <footer>
+        &copy; CalmaMente - Fatec Votorantim - Todos os direitos reservados
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
