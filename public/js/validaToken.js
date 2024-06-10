@@ -24,12 +24,16 @@ function parseJwt(token){
 
 }
 
-//Captura o botão logout pelo ID
-const btnLogout = document.getElementById('logout')
-//Adicionamos o listener no click
-btnLogout.addEventListener('click', function(){
-    //Removemos o localStorage
-    localStorage.removeItem('token')
-    //Redirecionamos para o login
-    window.location.href = 'index.html'
-})
+// Captura o botão logout pelo ID
+const btnLogout = document.getElementById('logout');
+
+// Adicionamos o listener no click
+btnLogout.addEventListener('click', function() {
+    // Removemos o localStorage
+    localStorage.removeItem('token');
+
+    // Redirecionamos para o login somente se o token estiver presente
+    if (!localStorage.getItem('token')) {
+        window.location.href = 'index.html';
+    }
+});
