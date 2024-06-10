@@ -9,9 +9,7 @@ const router = express.Router()
 const { db, ObjectId } = await connectToDatabase()
 const nomeCollection = 'usuarios'
 
-/************
-* VALIDAÇÕES DO USUÁRIO
-/***********/
+//############################################### VALIDAÇÕES DO USUÁRIO ######################################################
 const validaUsuario = [
     check('nome')
         .not().isEmpty().trim().withMessage('É obrigatório informar o nome')
@@ -20,7 +18,7 @@ const validaUsuario = [
         .isLength({ max: 100 }).withMessage('Informe no máximo 100 caracteres'),
     check('email')
         .not().isEmpty().trim().withMessage('É obrigatório informar o email')
-        .isLowercase().withMessage('Não são permitidas maiúsculas')
+        .isLowercase().withMessage('Não são permitidas letras maiúsculas')
         .isEmail().withMessage('Informe um email válido')
         .custom((value, { req }) => {
             return db.collection(nomeCollection)

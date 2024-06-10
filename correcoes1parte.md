@@ -14,13 +14,13 @@ ok - Após inserir, limpar o formulário. (reset)
 
 ok - O campo data de cadastro não está sendo salvo. Ex: 20/02/2020
  
-[FAZENDO - FALTA A PAG FRONT] A edição do registro não está funcionando
+ok - A edição do registro não está funcionando
 
 OK - Na mensagem de exclusão, deixar a palavra clínicas no singular
 
 ok - alterar o campo data de cadastro para input='date'
 
-[FAZENDO - TA COM BUGS] implementar na UI a busca pelo nome da clínica (chamando a API)
+ok - implementar na UI a busca pelo nome da clínica (chamando a API)
 
 2. Backend
 

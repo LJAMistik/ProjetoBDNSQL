@@ -13,14 +13,4 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// ########################### FUNÇÃO PARA O ENVIO DE FORMULÁRIO DE RECUPERAR A SENHA ################################  
-
-function validarFormularioRecuperacao() {
-    var email = document.getElementById("email").value;
-    if (email === "") {
-        alert("Por favor, insira seu e-mail.");
-        return false;
-    }
-    return true;
-  }
 

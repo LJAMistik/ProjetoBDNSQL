@@ -1,14 +1,15 @@
 // Teste do endpoint dos usuários
 @baseURL = http://localhost:4000/api/usuarios
 //@baseURL = https://backend-rest-mongodb.vercel.app/api/usuarios
+
 ###
 # @prompt senha
 POST {{baseURL}}
 Content-Type: application/json
 
 {
-    "nome": "José Lima Alves",
-    "email": "josealves5@uol.com.br",
+    "nome": "João da Silva",
+    "email": "joaodasiva@gmail.com.br",
     "senha": "{{senha}}"
 }
 
