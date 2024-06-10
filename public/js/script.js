@@ -1,4 +1,4 @@
-// ########################### FUNÇÃO PARA MOSTRAR A SENHA ################################ 
+// ######################################### FUNÇÃO PARA MOSTRAR A SENHA ############################################# 
 
 document.addEventListener("DOMContentLoaded", function() {
     const togglePasswords = document.querySelectorAll('.alternar-senha');
@@ -12,8 +12,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
-
-
 
 // ########################### FUNÇÃO PARA O ENVIO DE FORMULÁRIO DE RECUPERAR A SENHA ################################  
 

@@ -1,3 +1,5 @@
+// ########################### FUNÇÃO PARA ENVIAR OS DADOS DO FORMULARIO DE LOGIN ################################
+
 const urlBase = window.location.href.replace(/\/[^\/]*$/, '') + '/api';
 
 function showModalMessage(message, isError = false) {

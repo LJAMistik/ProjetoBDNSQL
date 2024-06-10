@@ -2,6 +2,7 @@ import express from 'express'
 import { config } from 'dotenv'
 import fs from 'fs'
 import swaggerUI from 'swagger-ui-express'
+
 config() // carrega as variáveis do .env
 
 const app = express()
