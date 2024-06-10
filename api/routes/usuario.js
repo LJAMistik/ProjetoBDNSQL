@@ -211,6 +211,23 @@ router.get('/:id', auth, async (req, res) => {
     // Lógica para recuperar os detalhes de um usuário específico
 });
 
+// GET Detalhes do Usuário Logado
+router.get('/perfil', auth, async (req, res) => {
+    try {
+        const userId = req.user.id; // ID do usuário logado obtido do token JWT
+        const user = await db.collection(nomeCollection).findOne({ _id: ObjectId(userId) });
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Erro ao obter os detalhes do usuário: ', error);
+        res.status(500).json({ message: 'Erro ao obter os detalhes do usuário' });
+    }
+});
+
 
 //############################################### OPERAÇÕES DO PUT ######################################################
 

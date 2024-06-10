@@ -11,7 +11,7 @@ msg: 'Acesso negado. É obrigatório o envio do token JWT'
           payload - id do usuário
           exp (expiration) - Data de expiração
           iat (issued at) - Data de criação */
-       req.usuario = await decoded.usuario
+       req.usuario = await decoded.usuario.id
        next() //direcionamos para o endpoint
     } catch(e) {
         res.status(403).send({error: `Token inválido: ${e.message}`})
