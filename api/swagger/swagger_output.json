@@ -5,9 +5,10 @@
     "title": "📊📈API Fatec Votorantim",
     "description": "➡️Documentação gerada automaticamente pelo módulo <a href='https://github.com/davibaltar/swagger-autogen' target='_blank'>swagger-autogen</a>."
   },
-  "host": "backend-rest-mongodb.vercel.app",
+  "host": "localhost:4000",
   "basePath": "/api",
   "schemes": [
+    "http",
     "https"
   ],
   "securityDefinitions": {
@@ -39,112 +40,45 @@
         }
       }
     },
-    "/prestadores": {
+    "/api/clinicas": {
       "get": {
         "tags": [
-          "Prestadores de Serviço"
+          "Clínicas"
         ],
-        "summary": "Lista todos os prestadores de serviço",
-        "description": "Endpoint para obter todos os prestadores de serviço.",
+        "summary": "Obtém a lista de clínicas",
+        "description": "Endpoint para obter a lista de todas as clínicas disponíveis.",
         "parameters": [
           {
             "name": "limit",
-            "type": "int",
-            "description": "Limite de registros por página (opcional, padrão: 10)",
-            "in": "query"
+            "in": "query",
+            "type": "string"
           },
           {
             "name": "skip",
-            "type": "int",
-            "description": "Número de registros a pular (opcional, padrão: 0)",
-            "in": "query"
+            "in": "query",
+            "type": "string"
           },
           {
             "name": "order",
-            "type": "string",
-            "description": "Campo de ordenação (opcional, ex: razao_social:asc)",
-            "in": "query"
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Array com os prestadores de serviço"
-          },
-          "401": {
-            "description": "Acesso negado. É obrigatório o envio do token JWT"
+            "description": "OK"
           },
           "500": {
-            "description": "Erro ao obter a listagem dos prestadores"
+            "description": "Erro Interno do Servidor"
           }
         }
       },
       "post": {
         "tags": [
-          "Prestadores de Serviço"
+          "Clínicas"
         ],
-        "summary": "Adiciona um novo prestador de serviço",
-        "description": "Endpoint para adicionar um novo prestador de serviço.",
-        "parameters": [
-          {
-            "name": "prestador",
-            "in": "body",
-            "description": "Informações do prestador de serviço",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "cnpj": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "12345345000166"
-                        }
-                      }
-                    },
-                    "razao_social": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "MARIA ALCINA TRANSPORTES LTDA."
-                        }
-                      }
-                    },
-                    "cep": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "13310160"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ],
+        "summary": "Cria uma nova clínica",
+        "description": "Endpoint para criar uma nova clínica.",
         "responses": {
           "201": {
             "description": "Criado"
@@ -156,14 +90,103 @@
             "description": "Erro Interno do Servidor"
           }
         }
-      },
+      }
+    },
+    "/api/clinicas/id/{id}": {
+      "get": {
+        "tags": [
+          "Clínicas"
+        ],
+        "summary": "Obtém uma clínica pelo ID",
+        "description": "Endpoint para obter os detalhes de uma clínica específica com base no ID fornecido.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/api/clinicas/nome/{filtro}": {
+      "get": {
+        "tags": [
+          "Clínicas"
+        ],
+        "summary": "Obtém uma clínica pelo nome",
+        "description": "Endpoint para obter os detalhes de uma clínica específica com base no nome fornecido.",
+        "parameters": [
+          {
+            "name": "filtro",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/api/clinicas/especialidades/{especialidade}/uf/{uf}": {
+      "get": {
+        "tags": [
+          "Clínicas"
+        ],
+        "summary": "Obtém clínicas por especialidade e UF",
+        "description": "Endpoint para obter uma lista de clínicas com base na especialidade e UF fornecidas.",
+        "parameters": [
+          {
+            "name": "especialidade",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/api/clinicas/{id}": {
       "put": {
         "tags": [
-          "Prestadores de Serviço"
+          "Clínicas"
         ],
-        "summary": "Altera um prestador de serviço pelo ID",
-        "description": "Endpoint para alterar um prestador de serviço pelo ID.",
+        "summary": "Atualiza uma clínica",
+        "description": "Endpoint para atualizar uma clínica existente.",
         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -188,92 +211,27 @@
             "description": "Erro Interno do Servidor"
           }
         }
-      }
-    },
-    "/prestadores/{id}": {
-      "get": {
-        "tags": [
-          "Prestadores de Serviço"
-        ],
-        "summary": "Lista o prestador de serviço pelo ID",
-        "description": "Endpoint para obter um único prestador de serviço pelo ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "id do Prestador de Serviço"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Array com o prestador de serviço"
-          },
-          "401": {
-            "description": "Acesso negado. É obrigatório o envio do token JWT"
-          },
-          "500": {
-            "description": "Erro ao obter o prestador pelo ID"
-          }
-        }
       },
       "delete": {
         "tags": [
-          "Prestadores de Serviço"
+          "Clínicas"
         ],
-        "summary": "Remove o prestador de serviço pelo ID",
-        "description": "Endpoint para apagar um único prestador de serviço pelo ID.",
+        "summary": "Exclui uma clínica",
+        "description": "Endpoint para excluir uma clínica pelo ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "id do Prestador de Serviço a ser excluído"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Registro removido com sucesso"
-          },
-          "401": {
-            "description": "Acesso negado. É obrigatório o envio do token JWT"
+            "description": "OK"
           },
           "404": {
-            "description": "Não há nenhum prestador com o id informado"
-          },
-          "500": {
-            "description": "Erro ao excluir o prestador pelo ID"
-          }
-        }
-      }
-    },
-    "/prestadores/razao/{filtro}": {
-      "get": {
-        "tags": [
-          "Prestadores de Serviço"
-        ],
-        "summary": "Lista o prestador de serviço pela razão social ou nome fantasia",
-        "description": "Endpoint para obter uma relação de prestadores de serviço pela razão social ou nome fantasia.",
-        "parameters": [
-          {
-            "name": "filtro",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "parte da razão social ou nome fantasia do Prestador de Serviço"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Array com o prestador de serviço"
-          },
-          "401": {
-            "description": "Acesso negado. É obrigatório o envio do token JWT"
-          },
-          "500": {
-            "description": "Erro ao obter o prestador pelo ID"
+            "description": "Não Encontrado"
           }
         }
       }
@@ -283,78 +241,14 @@
         "tags": [
           "Usuários"
         ],
-        "summary": "Adiciona um novo usuário ao sistema",
-        "description": "Endpoint para adicionar um novo usuário.",
-        "parameters": [
-          {
-            "name": "usuario",
-            "in": "body",
-            "description": "Informações do usuário",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "nome": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "JOSÉ MARIA LIMA"
-                        }
-                      }
-                    },
-                    "email": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "joselima@uol.com.br"
-                        }
-                      }
-                    },
-                    "senha": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "SenhaSegura24!"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ],
+        "summary": "Efetua o logout  *",
+        "description": "Endpoint para realizar logout",
         "responses": {
-          "201": {
-            "description": "Criado"
+          "200": {
+            "description": "OK"
           },
-          "400": {
-            "description": "Solicitação Inválida"
-          },
-          "403": {
-            "description": "Acesso Negado"
+          "500": {
+            "description": "Erro Interno do Servidor"
           }
         }
       },
@@ -407,6 +301,67 @@
           },
           "404": {
             "description": "Não Encontrado"
+          }
+        }
+      }
+    },
+    "/usuarios/perfil": {
+      "get": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Exibe os detalhes do usuário logado",
+        "description": "Endpoint para obter os detalhes do usuário logado.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/usuarios/id": {
+      "put": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Permite edição dos dados do usuario",
+        "description": "Endpoint para edita dados usuario.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Solicitação Inválida"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Exclui um usuário",
+        "description": "Endpoint para deletar usuario.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
           }
         }
       }

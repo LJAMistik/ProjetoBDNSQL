@@ -1,8 +1,7 @@
 import express from 'express'
 import { config } from 'dotenv'
 import fs from 'fs'
-import swaggerUI from 'swagger-ui-express'
-
+import swaggerUI from "swagger-ui-express";
 config() // carrega as variáveis do .env
 
 const app = express()
@@ -52,12 +51,22 @@ app.get('/api', (req, res)=> {
 app.use('/api/clinicas', RotasClinicas)
 app.use('/api/usuarios', RotasUsuarios)
 
+
 /* Rota da documentação Swagger */
-app.use('/api/doc', swaggerUI.serve, swaggerUI.setup(JSON.parse(fs.readFileSync('./api/swagger/swagger_output.json')), {
-    customCss:
-        '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
-    customCssUrl: CSS_URL
-}))
+const css = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+ 
+app.use(
+  "/api/doc",
+  swaggerUI.serve,
+  swaggerUI.setup(
+    JSON.parse(fs.readFileSync("./api/swagger/swagger_output.json")),
+    {
+      customCss:
+        ".swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }",
+      customCssUrl: css,
+    }
+  )
+);
 
 //Listen
 app.listen(PORT, function(){

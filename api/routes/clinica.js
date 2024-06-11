@@ -53,6 +53,13 @@ const nomeCollection = 'clinicas'
  */
 
 router.get('/', auth, async (req, res) => {
+    /**
+   * #swagger.tags = ['Clínicas']
+   * #swagger.summary = 'Obtém a lista de clínicas'
+   * #swagger.description = 'Endpoint para obter a lista de todas as clínicas disponíveis.'
+   * #swagger.path = '/api/clinicas'
+   * #swagger.method = 'GET'
+   */
   const { limit, skip, order } = req.query
   try {
     const docs = []
@@ -82,6 +89,33 @@ router.get('/', auth, async (req, res) => {
  */
 
 router.get('/id/:id', auth, async (req, res) => {
+  /**
+ * #swagger.tags = ['Clínicas']
+ * #swagger.summary = 'Obtém uma clínica pelo ID'
+ * #swagger.description = 'Endpoint para obter os detalhes de uma clínica específica com base no ID fornecido.'
+ * #swagger.path = '/api/clinicas/id/{id}'
+ * #swagger.method = 'GET'
+ */
+router.get('/id/:id', auth, async (req, res) => {
+  try {
+    const docs = []
+    await db.collection(nomeCollection)
+      .find({ '_id': { $eq: new ObjectId(req.params.id) } }, {})
+      .forEach((doc) => {
+        docs.push(doc)
+      })
+    res.status(200).json(docs)
+  } catch (err) {
+    res.status(500).json({
+      errors: [{
+        value: `${err.message}`,
+        msg: 'Erro ao obter a clínica pelo ID',
+        param: '/id/:id'
+      }]
+    })
+  }
+})
+
   try {
     const docs = []
     await db.collection(nomeCollection)
@@ -110,6 +144,13 @@ router.get('/id/:id', auth, async (req, res) => {
  */
 
 router.get('/nome/:filtro', auth, async (req, res) => {
+    /**
+   * #swagger.tags = ['Clínicas']
+   * #swagger.summary = 'Obtém uma clínica pelo nome'
+   * #swagger.description = 'Endpoint para obter os detalhes de uma clínica específica com base no nome fornecido.'
+   * #swagger.path = '/api/clinicas/nome/{filtro}'
+   * #swagger.method = 'GET'
+   */
   try {
     const filtro = req.params.filtro.toString()
     const docs = []
@@ -144,6 +185,13 @@ router.get('/nome/:filtro', auth, async (req, res) => {
  */
 
 router.get('/especialidades/:especialidade/uf/:uf', auth, async (req, res) => {
+    /**
+   * #swagger.tags = ['Clínicas']
+   * #swagger.summary = 'Obtém clínicas por especialidade e UF'
+   * #swagger.description = 'Endpoint para obter uma lista de clínicas com base na especialidade e UF fornecidas.'
+   * #swagger.path = '/api/clinicas/especialidades/{especialidade}/uf/{uf}'
+   * #swagger.method = 'GET'
+   */
   try {
     const docs = []
     await db.collection(nomeCollection)
@@ -183,7 +231,13 @@ router.get('/especialidades/:especialidade/uf/:uf', auth, async (req, res) => {
 */
 
 router.post('/', auth, validaClinicas, async(req, res) => {
-  //req.body.usuarioInclusao = req.usuario.id
+  /**
+ * #swagger.tags = ['Clínicas']
+ * #swagger.summary = 'Cria uma nova clínica'
+ * #swagger.description = 'Endpoint para criar uma nova clínica.'
+ * #swagger.path = '/api/clinicas'
+ * #swagger.method = 'POST'
+  */
   try{
     const errors = validationResult(req)
     if(!errors.isEmpty()){
@@ -212,6 +266,13 @@ router.post('/', auth, validaClinicas, async(req, res) => {
  */
 
 router.put('/:id', auth, validaClinicas, async (req, res) => {
+  /**
+ * #swagger.tags = ['Clínicas']
+ * #swagger.summary = 'Atualiza uma clínica'
+ * #swagger.description = 'Endpoint para atualizar uma clínica existente.'
+ * #swagger.path = '/api/clinicas/{id}'
+ * #swagger.method = 'PUT'
+ */
   const idDocumento = req.params.id // Obter o _id do parâmetro da URL
   delete req.body._id // Remover o _id do corpo da requisição
   try {
@@ -241,6 +302,13 @@ router.put('/:id', auth, validaClinicas, async (req, res) => {
  */
 
 router.delete('/:id', auth, async(req, res) => {
+  /**
+ * #swagger.tags = ['Clínicas']
+ * #swagger.summary = 'Exclui uma clínica'
+ * #swagger.description = 'Endpoint para excluir uma clínica pelo ID.'
+ * #swagger.path = '/api/clinicas/{id}'
+ * #swagger.method = 'DELETE'
+  */
   const result = await db.collection(nomeCollection).deleteOne({
     "_id": { $eq: new ObjectId(req.params.id)}
   })

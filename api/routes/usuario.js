@@ -95,19 +95,26 @@ router.post('/', validaUsuario, async (req, res) => {
 })
 
 // Rota de logout
-router.post('/logout', auth, async (req, res) => {
-    try {
-        // Limpar o token JWT do cliente (por exemplo, do armazenamento local)
-        localStorage.removeItem('jwtToken');
+    router.post('/logout', auth, async (req, res) => {
+    /* 
+    * #swagger.tags = ['Usuários']
+    * #swagger.summary = 'Efetua o logout
+    * #swagger.description = 'Endpoint para realizar logout'    
+    * #swagger.path = '/usuarios'
+    * #swagger.method = 'POST'
+    */
+        try {
+            // Limpar o token JWT do cliente (por exemplo, do armazenamento local)
+            localStorage.removeItem('jwtToken');
 
-        // Opcional: invalidar o token no servidor (se estiver mantendo uma lista negra de tokens inválidos)
-        // Adicione o token à lista negra ou faça qualquer outra ação necessária para invalidar o token no servidor
+            // Opcional: invalidar o token no servidor (se estiver mantendo uma lista negra de tokens inválidos)
+            // Adicione o token à lista negra ou faça qualquer outra ação necessária para invalidar o token no servidor
 
-        res.status(200).json({ message: 'Logout bem-sucedido' });
-    } catch (err) {
-        res.status(500).json({ message: 'Erro ao fazer logout' });
-    }
-});
+            res.status(200).json({ message: 'Logout bem-sucedido' });
+        } catch (err) {
+            res.status(500).json({ message: 'Erro ao fazer logout' });
+        }
+    });
 
 
 //############################################### OPERAÇÕES DO GET ######################################################
@@ -201,18 +208,16 @@ router.post('/login', validaLogin, async (req, res) => {
 
 })
 
-// GET Usuário por ID
-router.get('/:id', auth, async (req, res) => {
-    // Lógica para recuperar os detalhes de um usuário específico
-});
-
-// GET Detalhes do Usuário
-router.get('/:id', auth, async (req, res) => {
-    // Lógica para recuperar os detalhes de um usuário específico
-});
 
 // GET Detalhes do Usuário Logado
 router.get('/perfil', auth, async (req, res) => {
+    /* 
+    * #swagger.tags = ['Usuários']
+    * #swagger.summary = 'Exibe os detalhes do usuário logado'
+    * #swagger.description = 'Endpoint para obter os detalhes do usuário logado.'    
+    * #swagger.path = '/usuarios/perfil'
+    * #swagger.method = 'GET'
+    */
     try {
         const userId = req.user.id; // ID do usuário logado obtido do token JWT
         const user = await db.collection(nomeCollection).findOne({ _id: ObjectId(userId) });
@@ -231,13 +236,57 @@ router.get('/perfil', auth, async (req, res) => {
 
 //############################################### OPERAÇÕES DO PUT ######################################################
 
+// PUT Usuário
 router.put('/:id', auth, async (req, res) => {
-    // Lógica para atualizar informações do usuário
+    /* 
+    * #swagger.tags = ['Usuários']
+    * #swagger.summary = 'Permite edição dos dados do usuario'
+    * #swagger.description = 'Endpoint para edita dados usuario.'    
+    * #swagger.path = '/usuarios/id'
+    * #swagger.method = 'PUT'
+    */
+    try {
+        // Extrair o ID do parâmetro da URL
+        const resourceId = req.params.id;
+
+        // Extrair os dados a serem atualizados do corpo da requisição
+        const updatedData = req.body;
+
+        // Verificar se o ID fornecido é válido
+        if (!ObjectId.isValid(resourceId)) {
+            return res.status(400).json({ message: 'ID inválido' });
+        }
+
+        // Tentar atualizar o recurso no banco de dados
+        const result = await db.collection(nomeCollection).updateOne(
+            { _id: new ObjectId(resourceId) },
+            { $set: updatedData }
+        );
+
+        // Verificar se o recurso foi encontrado e atualizado
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({ message: 'Recurso não encontrado' });
+        }
+
+        // Responder com sucesso
+        res.status(200).json({ message: 'Recurso atualizado com sucesso' });
+    } catch (error) {
+        console.error('Erro ao atualizar o recurso:', error);
+        res.status(500).json({ message: 'Erro interno do servidor ao atualizar o recurso' });
+    }
 });
+
 
 //############################################### OPERAÇÕES DO DELETE ######################################################
 
 router.delete('/:id', auth, async (req, res) => {
+    /* 
+    * #swagger.tags = ['Usuários']
+    * #swagger.summary = 'Exclui um usuário'
+    * #swagger.description = 'Endpoint para deletar usuario.'    
+    * #swagger.path = '/usuarios/id'
+    * #swagger.method = 'DELETE'
+    */
     try {
       const result = await db.collection(nomeCollection).deleteOne({
         "_id": new ObjectId(req.params.id)
