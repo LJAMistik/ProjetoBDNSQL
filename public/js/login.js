@@ -1,6 +1,6 @@
 // ########################### FUNÇÃO PARA ENVIAR OS DADOS DO FORMULARIO DE LOGIN ################################
 
-const urlBase = window.location.href.replace(/\/[^\/]*$/, '') + '/api';
+const urlBase = window.location.href.replace(/\/[^\/]*$/, '')+"/api";
 
 function showModalMessage(message, isError = false) {
     const mensagemElem = document.getElementById('mensagem');
@@ -17,10 +17,10 @@ document.getElementById('formulario-login').addEventListener('submit', function(
 
     const dadosLogin = {
         email: login,
-        senha: senha
+        password: senha
     };
 
-    fetch(`${urlBase}/usuarios/login`, {
+    fetch(`${urlBase}/auth/login`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosLogin)
@@ -28,7 +28,7 @@ document.getElementById('formulario-login').addEventListener('submit', function(
     .then(response => response.json().then(data => ({ status: response.status, body: data })))
     .then(({ status, body }) => {
         if (status === 200) {
-            localStorage.setItem('token', body.access_token);
+            localStorage.setItem('token', body.token);
             window.location.href = 'menu.html';
         } else {
             const errorMessages = body.errors.map(error => error.msg).join('<br>');

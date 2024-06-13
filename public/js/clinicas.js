@@ -1,60 +1,58 @@
 //const urlBase = 'https://backend-rest-mongodb.vercel.app/api'
-const urlBase = 'http://localhost:4000/api'
+const urlBase = window.location.href.replace(/\/[^\/]*$/, '')+"/api";
 
 
 // #################################### DEFINIÇÃO DO OBJETO #############################################
 
-document.getElementById('formulario-clinica').addEventListener('submit', function (event){
-  event.preventDefault() // evita o recarregamento
-  const clinicas = {
-    "nome": document.getElementById('nome').value,
-    "email": document.getElementById('email').value,
-    "data_cadastro": new Date(document.getElementById('data_cadastro').value),
-    "telefone": document.getElementById('telefone').value,
-    "classificacao": document.getElementById('classificacao').value,
-    "especialidades": document.getElementById('especialidades').value.split(','),
-    "endereco": {
-      "logradouro": document.getElementById('logradouro').value,
-      "complemento": document.getElementById('complemento').value,
-      "bairro": document.getElementById('bairro').value,
-      "cidade": document.getElementById('cidade').value,
-      "uf": document.getElementById('unidade-federacao').value,
-      "cep": document.getElementById('cep').value,
-      "coordinates": [document.getElementById('latitude').value, document.getElementById('longitude').value]
+document.getElementById('formulario-clinica').addEventListener('submit', function(event) {
+  event.preventDefault(); // evita o recarregamento
+  
+  const clinicaData = {
+    name: document.getElementById('nome').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('telefone').value,
+    rating: document.getElementById('classificacao').value,
+    address: {
+      zipCode: document.getElementById('cep').value,
+      neighborhood: document.getElementById('bairro').value,
+      street: document.getElementById('logradouro').value,
+      number: document.getElementById('numero').value,
+      city: document.getElementById('cidade').value,
+      state: document.getElementById('unidade-federacao').value,
+      complement: document.getElementById('complemento').value,
     }
-  } 
+  };
 
-    console.log(clinicas)
-
-    // chama a função para salvar o objeto
-    salvaClinicas(clinicas)
-})
+  console.log(clinicaData);
+  salvaClinicas(clinicaData)
+});
 
 
 // ############################### FUNÇÃO PARA OBTER O O VALOR DE UM ELEMENTO HTML PELO ID #############################
 
-function getValueById(id) {
-  const element = document.getElementById(id);
-  if (element) {
-      return element.value;
-  } else {
-      console.error(`Elemento com ID ${id} não encontrado`);
-      return '';
-  }
-}
+// function getValueById(id) {
+//   const element = document.getElementById(id);
+//   if (element) {
+//       return element.value;
+//   } else {
+//       console.error(`Elemento com ID ${id} não encontrado`);
+//       return '';
+//   }
+// }
 
 
 // ################################################# FUNÇÃO PARA SALVAR #################################################
 
-async function salvaClinicas(clinicas) {
-  console.log(clinicas);
+async function salvaClinicas(clinicaData) {
+  console.log(clinicaData);
   try {
-    const response = await fetch(`${urlBase}/clinicas`, {
+    const response = await fetch(`${urlBase}/clinics`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Barear ${localStorage.getItem('token')}`
       },
-      body: JSON.stringify(clinicas)
+      body: JSON.stringify(clinicaData)
     });
     const data = await response.json();
     
@@ -81,63 +79,72 @@ async function salvaClinicas(clinicas) {
 // ###################################### FUNÇÃO PARA LIMPAR O FORMULÁRIO ###############################################
 
 function limpaFormulario() {
-  ['nome', 'email', 'data_cadastro', 'telefone', 'classificacao', 'especialidades', 'complemento', 'logradouro', 'numero', 'bairro', 'cidade', 'cep', 'latitude', 'longitude'].forEach(id => {
-      document.getElementById(id).value = '';
+  const fieldsToClear = [
+    'nome', 'email', 'data_cadastro', 'telefone', 'classificacao', 
+    'complemento', 'numero', 'bairro', 'cidade', 'cep']
+
+  fieldsToClear.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.value = '';
+    }
   });
-  document.getElementById('unidade-da-federacao').selectedIndex = 0;
+
+  const ufElement = document.getElementById('unidade-federacao');
+  if (ufElement) {
+    ufElement.selectedIndex = 0;
+  }
 }
+
 
 
 // ###################################### FUNÇÃO PARA CARREGAR AS CLÍNICAS NA TABELA ####################################
 
 async function buscaClinicas() {
-  await fetch(`${urlBase}/clinicas`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  })
-  .then(response => response.json())
-  .then(data => {
-    var tbodyRef = document.getElementById('tabela-clinicas').getElementsByTagName('tbody')[0];
+  try {
+    const response = await fetch(`${urlBase}/clinics`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Barear ${localStorage.getItem('token')}`
+      },
+    });
+    const data = await response.json();
+    
+    const tbodyRef = document.getElementById('tabela-clinicas').getElementsByTagName('tbody')[0];
     tbodyRef.innerHTML = "";
+
     for (const clinica of data) {
-      // Insert a row at the end of table
-      var newRow = tbodyRef.insertRow();
+      const newRow = tbodyRef.insertRow();
 
-      // Insert a cell at the end of the row
-      var colNome = newRow.insertCell();
-      colNome.appendChild(document.createTextNode(clinica.nome));
-      var colEmail = newRow.insertCell();
-      colEmail.appendChild(document.createTextNode(clinica.email));
-      var colDataCadastro = newRow.insertCell();
-      var dataCadastro = new Date(clinica.data_cadastro);
-      var dataFormatada = dataCadastro.toLocaleDateString('pt-BR');
-      colDataCadastro.appendChild(document.createTextNode(dataFormatada));
-      var colTelefone = newRow.insertCell();
-      colTelefone.appendChild(document.createTextNode(clinica.telefone));
-      var colClassificacao = newRow.insertCell();
-      colClassificacao.appendChild(document.createTextNode(clinica.classificacao));
-      var colEspecialidades = newRow.insertCell();
-      colEspecialidades.appendChild(document.createTextNode(clinica.especialidades.toString()));
-      var colEndereco = newRow.insertCell();
-      colEndereco.appendChild(document.createTextNode(clinica.endereco.logradouro));
-      var colLat = newRow.insertCell();
-      var colLong = newRow.insertCell();
-
-      if(!!clinica.endereco.coordinates) {
-        colLat.appendChild(document.createTextNode(clinica.endereco.coordinates[0]));
-        colLong.appendChild(document.createTextNode(clinica.endereco.coordinates[1]));
-      }
+      newRow.insertCell().appendChild(document.createTextNode(clinica.name));
+      newRow.insertCell().appendChild(document.createTextNode(clinica.email));
       
-      // Create the action cell
-      var colAction = newRow.insertCell();
+      const dataCadastro = new Date(clinica.createdAt);
+      const dataFormatada = dataCadastro.toLocaleDateString('pt-BR');
+      newRow.insertCell().appendChild(document.createTextNode(dataFormatada));
+      
+      newRow.insertCell().appendChild(document.createTextNode(clinica.phone));
+      newRow.insertCell().appendChild(document.createTextNode(parseFloat(clinica.rating)));
+      newRow.insertCell().appendChild(document.createTextNode(formatAddress(clinica.address)));
+      // newRow.insertCell().appendChild(document.createTextNode(clinica.phone));
+
+
+      
+      const colAction = newRow.insertCell();
       colAction.innerHTML = `
         <button class='btn btn-danger btn-sm botao-tabela' onclick='removeClinicas("${clinica._id}")'>Excluir</button>
         <button class='btn btn-danger btn-sm botao-tabela'' onclick='editaClinicaExistente("${clinica._id}")'>Editar</button>
       `;
     }
-  })
+  } catch (error) {
+    console.error('Erro ao buscar clínicas:', error);
+    alert('Erro ao buscar clínicas. Tente novamente mais tarde.');
+  }
+}
+
+function formatAddress(address) {
+  return `${address.street},${address.number}, ${address.neighborhood} - ${address.city}/${address.state}`;
 }
 
 window.onload = function() {
@@ -149,19 +156,17 @@ window.onload = function() {
 
 async function atualizaClinica(id, dadosAtualizados) {
   try {
-    // Obter os dados atuais da clinica pelo ID
+    // Obtém os dados atuais da clínica pelo ID
     const response = await fetch(`${urlBase}/clinicas/id/${id}`);
+    if (!response.ok) {
+      throw new Error('Erro ao tentar obter os dados da clínica. Por favor, tente novamente.');
+    }
     const clinicaAtual = await response.json();
 
-    if (!response.ok) {
-      alert('Erro ao tentar obter os dados da clinica. Por favor, tente novamente.');
-      return;
-    }
-
-    // Mesclar os dados atuais com os dados atualizados
+    // Mescla os dados atuais com os dados atualizados
     const clinicaNova = { ...clinicaAtual[0], ...dadosAtualizados };
 
-    // Fazer a solicitação PUT com os dados atualizados
+    // Faz a solicitação PUT com os dados atualizados
     const responseAtualizacao = await fetch(`${urlBase}/clinicas/${id}`, {
       method: 'PUT',
       headers: {
@@ -170,23 +175,23 @@ async function atualizaClinica(id, dadosAtualizados) {
       body: JSON.stringify(clinicaNova)
     });
 
-    if (responseAtualizacao.ok) {
-      const data = await responseAtualizacao.json();
-      if (data.updatedCount > 0) {
-        alert('Clinica atualizada com sucesso!');
-        buscaClinicas(); // Atualiza a listagem na UI
-      } else {
-        alert('Erro: Nenhuma clinica foi atualizada. Verifique os dados e tente novamente.');
-      }
+    if (!responseAtualizacao.ok) {
+      throw new Error('Erro ao tentar atualizar a clínica. Por favor, tente novamente.');
+    }
+
+    const data = await responseAtualizacao.json();
+    if (data.updatedCount > 0) {
+      alert('Clínica atualizada com sucesso!');
+      buscaClinicas(); // Atualiza a listagem na UI
     } else {
-      // Se houver um erro de rede ou um erro no servidor
-      alert('Erro ao tentar atualizar a clinica. Por favor, tente novamente.');
+      alert('Erro: Nenhuma clínica foi atualizada. Verifique os dados e tente novamente.');
     }
   } catch (error) {
-    console.error('Erro ao tentar atualizar a clinica:', error);
-    alert('Erro ao tentar atualizar a clinica. Por favor, tente novamente.');
+    console.error('Erro ao tentar atualizar a clínica:', error);
+    alert('Erro ao tentar atualizar a clínica. Por favor, tente novamente.');
   }
 }
+
 
 
 // ########################### FUNÇÃO PARA EDITAR OS DADOS DE UMA CLINICA JÁ EXISTENTE ##################################
@@ -194,7 +199,13 @@ async function atualizaClinica(id, dadosAtualizados) {
 async function editaClinicaExistente(id) {
   try {
     // Buscar os dados da clinica existente pelo ID
-    const response = await fetch(`${urlBase}/clinicas/id/${id}`);
+    const response = await fetch(`${urlBase}/clinics/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Barear ${localStorage.getItem('token')}`
+      },
+    });
     if (!response.ok) {
       alert('Erro ao obter os dados da clinica. Por favor, tente novamente.');
       return;
@@ -209,15 +220,11 @@ async function editaClinicaExistente(id) {
     document.getElementById('data_cadastro').value = dadosClinica.data_cadastro;
     document.getElementById('telefone').value = dadosClinica.telefone;
     document.getElementById('classificacao').value = dadosClinica.classificacao;
-    document.getElementById('especialidades').value = dadosClinica.especialidades.join(',');
-    document.getElementById('logradouro').value = dadosClinica.endereco.logradouro;
     document.getElementById('complemento').value = dadosClinica.endereco.complemento;
     document.getElementById('bairro').value = dadosClinica.endereco.bairro;
     document.getElementById('cidade').value = dadosClinica.endereco.cidade;
     document.getElementById('unidade-federacao').value = dadosClinica.endereco.uf;
     document.getElementById('cep').value = dadosClinica.endereco.cep;
-    document.getElementById('latitude').value = dadosClinica.endereco.coordinates[0];
-    document.getElementById('longitude').value = dadosClinica.endereco.coordinates[1];
     
     // Adicionar um evento de clique ao botão de enviar do formulário para chamar a função de atualização com os dados preenchidos
     document.getElementById('formulario-clinica').addEventListener('submit', function (event) {
@@ -228,15 +235,12 @@ async function editaClinicaExistente(id) {
         "data_cadastro": document.getElementById('data_cadastro').value,
         "telefone": document.getElementById('telefone').value,
         "classificacao": document.getElementById('classificacao').value,
-        "especialidades": document.getElementById('especialidades').value.split(','),
         "endereco": {
-          "logradouro": document.getElementById('logradouro').value,
-          "complemento": document.getElementById('complemento').value,
+          "cep": document.getElementById('cep').value,
           "bairro": document.getElementById('bairro').value,
           "cidade": document.getElementById('cidade').value,
           "uf": document.getElementById('unidade-federacao').value,
-          "cep": document.getElementById('cep').value,
-          "coordinates": [document.getElementById('latitude').value, document.getElementById('longitude').value]
+          "complemento": document.getElementById('complemento').value,
         }
       };
       
@@ -255,18 +259,23 @@ async function editaClinicaExistente(id) {
 
 async function removeClinicas(id){
   if(confirm('Deseja realmente excluir esta clinica?')){
-      await fetch(`${urlBase}/clinicas/${id}`, {
+      await fetch(`${urlBase}/clinics/${id}`, {
           method: 'DELETE',
-          headers: {'Content-Type': 'application/json'}
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.deletedCount > 0){buscaClinicas() //atualizamos a UI
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Barear ${localStorage.getItem('token')}`
+
           }
       })
-      .catch(error => {
-          document.getElementById('mensagem').innerHTML = `Erro ao remover a clinica: ${error.message}`
-      })
+      buscaClinicas()
+      // .then(response => response.json())
+      // .then(data => {
+      //     if (data.deletedCount > 0){buscaClinicas() //atualizamos a UI
+      //     }
+      // })
+      // .catch(error => {
+      //     document.getElementById('mensagem').innerHTML = `Erro ao remover a clinica: ${error.message}`
+      // })
   }
 }
 
@@ -321,24 +330,25 @@ function exibirResultadosClinicas(resultados) {
 
 function exibirDetalhesClinica(clinica) {
   const divDetalhes = document.getElementById('detalhes-clinica');
+
+  // Monta o HTML com os detalhes da clínica
   divDetalhes.innerHTML = `
     <h2>Detalhes da Clínica</h2>
-    <p><strong>Nome:</strong> ${clinica.nome}</p>
-    <p><strong>Email:</strong> ${clinica.email}</p>
+    <p><strong>Nome:</strong> ${clinica.name}</p>
+    <p><strong>Email:</strong> ${clinica.contact[0].email}</p>
     <p><strong>Data de Cadastro:</strong> ${new Date(clinica.data_cadastro).toLocaleDateString()}</p>
-    <p><strong>Telefone:</strong> ${clinica.telefone}</p>
-    <p><strong>Classificação:</strong> ${clinica.classificacao}</p>
-    <p><strong>Especialidades:</strong> ${clinica.especialidades.join(', ')}</p>
+    <p><strong>Telefone:</strong> ${clinica.contact[0].phone}</p>
+    <p><strong>Classificação:</strong> ${clinica.rating.toString()}</p>
     <h5>Endereço</h5>
-    <p><strong>Logradouro:</strong> ${clinica.endereco.logradouro}</p>
-    <p><strong>Complemento:</strong> ${clinica.endereco.complemento}</p>
-    <p><strong>Bairro:</strong> ${clinica.endereco.bairro}</p>
-    <p><strong>Cidade:</strong> ${clinica.endereco.cidade}</p>
-    <p><strong>UF:</strong> ${clinica.endereco.uf}</p>
-    <p><strong>CEP:</strong> ${clinica.endereco.cep}</p>
-    <p><strong>Coordenadas:</strong> ${clinica.endereco.coordinates.join(', ')}</p>
+    <p><strong>Complemento:</strong> ${clinica.address.complement}</p>
+    <p><strong>Bairro:</strong> ${clinica.address.neighborhood}</p>
+    <p><strong>Cidade:</strong> ${clinica.address.city}</p>
+    <p><strong>UF:</strong> ${clinica.address.state}</p>
+    <p><strong>CEP:</strong> ${clinica.address.zipCode}</p>
   `;
 }
+
+
 
 
 // ####################################### FUNÇÃO PARA LIMPAR OS DETALHES DA CLÍNICA ###################################

@@ -3,7 +3,8 @@ async function buscarDadosDoUsuario() {
         const response = await fetch(`${urlBase}/usuario`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Barear ${localStorage.getItem('token')}`
             },
         });
         if (!response.ok) {
