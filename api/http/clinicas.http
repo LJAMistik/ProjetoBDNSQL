@@ -1,0 +1,89 @@
+// Teste da API REST de Clínicas
+
+@baseURL = http://localhost:4000/api/clinicas
+
+###
+// POST - Insere uma nova clínica
+POST {{baseURL}}
+Content-Type: application/json
+acess-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0NDAzNSwiZXhwIjoxNzE5NDA4MDM1fQ.O73ruOxW5xYsFxo1oHQc9kkmI6BZJcCtKHdllSWw-SY
+
+
+{
+  "nome": "Clinica de Teste de Domingo",
+  "email": "contato@clinicadeteste1.com",
+  "data_cadastro": "09/04/2024",
+  "telefone": "(15) 99111-1111",
+  "classificacao": "3.5",
+  "especialidades": ["1", "2", "3", "4"],
+  "endereco": {
+    "logradouro": "Rua A, 123",
+    "numero": "123",
+    "complemento": "nenhum",
+    "bairro": "Centro",
+    "cidade": "São Paulo",
+    "uf": "SP",
+    "cep": "12345-000",
+      "coordinates": [-12.3456, -12.3456]
+  }
+}
+
+// GET - Lista todos as clínicas
+GET {{baseURL}}/?limit=10&skip=0
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0NDAzNSwiZXhwIjoxNzE5NDA4MDM1fQ.O73ruOxW5xYsFxo1oHQc9kkmI6BZJcCtKHdllSWw-SY
+
+###
+// GET - Lista a clinica pelo ID
+GET {{baseURL}}/id/6655f46f67c5f2d1607cda19
+Content-Type: application/json
+acess-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0NDAzNSwiZXhwIjoxNzE5NDA4MDM1fQ.O73ruOxW5xYsFxo1oHQc9kkmI6BZJcCtKHdllSWw-SY
+
+
+###
+// GET - Lista a clinica pelo nome
+GET {{baseURL}}/nome/123
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0NDAzNSwiZXhwIjoxNzE5NDA4MDM1fQ.O73ruOxW5xYsFxo1oHQc9kkmI6BZJcCtKHdllSWw-SY
+
+
+###
+// GET - Lista a clinica pelo nome da especialidade
+GET http://localhost:4000/api/clinicas/especialidades/1/uf/SP
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0NDAzNSwiZXhwIjoxNzE5NDA4MDM1fQ.O73ruOxW5xYsFxo1oHQc9kkmI6BZJcCtKHdllSWw-SY
+
+
+###
+// PUT - Altera uma clínica já existente
+
+PUT {{baseURL}}/6666499b7c2ac099c0022d2a
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0NDAzNSwiZXhwIjoxNzE5NDA4MDM1fQ.O73ruOxW5xYsFxo1oHQc9kkmI6BZJcCtKHdllSWw-SY
+
+
+{
+  "nome": "Clinica de Teste de Domingo",
+  "email": "contato@clinicadeteste1.com",
+  "data_cadastro": "09/04/2024",
+  "telefone": "(15) 99111-1111",
+  "classificacao": "3.5",
+  "especialidades": ["1", "2", "3", "4"],
+  "endereco": {
+    "logradouro": "Rua A, 123",
+    "numero": "123",
+    "complemento": "nenhum",
+    "bairro": "Centro",
+    "cidade": "São Paulo",
+    "uf": "SP",
+    "cep": "12345-000",
+      "coordinates": [-12.3456, -12.3456]
+    }
+}
+
+###
+// DELETE - Remove a clinica pelo id
+DELETE {{baseURL}}/6655f46f67c5f2d1607cda19
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0NDAzNSwiZXhwIjoxNzE5NDA4MDM1fQ.O73ruOxW5xYsFxo1oHQc9kkmI6BZJcCtKHdllSWw-SY
+

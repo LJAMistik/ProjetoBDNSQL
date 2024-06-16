@@ -1,0 +1,60 @@
+// Teste do endpoint dos usuários
+@baseURL = http://localhost:4000/api/usuarios
+//@baseURL = https://backend-rest-mongodb.vercel.app/api/usuarios
+
+
+###
+# @prompt senha
+// POST - Cria um novo usuário
+POST {{baseURL}}
+Content-Type: application/json
+
+{
+    "nome": "Teste Um",
+    "email": "testeum@email.com.br",
+    "senha": "{{senha}}"
+}
+
+
+###
+# @prompt senha
+// POST - Efetua o login
+POST {{baseURL}}/login
+Content-Type: application/json
+
+{
+    "email": "testeum@email.com.br",
+    "senha": "{{senha}}"
+}
+
+
+###
+// POST - Efetua o logout
+POST {{baseURL}}/logout
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0ODM1MiwiZXhwIjoxNzE5NDEyMzUyfQ.DVPqAb_mjUB1M7o9d4WiIThpK6mi2qLCaGaYb8Od1_0
+
+
+###
+// GET - Lista todos os usuários
+GET {{baseURL}}
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0ODM1MiwiZXhwIjoxNzE5NDEyMzUyfQ.DVPqAb_mjUB1M7o9d4WiIThpK6mi2qLCaGaYb8Od1_0
+// Coloque o token do usuário que esteja logado, exemplo: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0ODM1MiwiZXhwIjoxNzE5NDEyMzUyfQ.DVPqAb_mjUB1M7o9d4WiIThpK6mi2qLCaGaYb8Od1_0
+
+
+###
+// GET - Exibe um usuário pelo ID
+GET {{baseURL}}/id/666ee66e505e32d7810eb76b
+// Apague o ':id' e coloque o ID do usuário que deseja consultar, exemplo: 666ee66e505e32d7810eb76b
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0ODM1MiwiZXhwIjoxNzE5NDEyMzUyfQ.DVPqAb_mjUB1M7o9d4WiIThpK6mi2qLCaGaYb8Od1_0
+// Coloque o token do usuário que esteja logado, exemplo: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0ODM1MiwiZXhwIjoxNzE5NDEyMzUyfQ.DVPqAb_mjUB1M7o9d4WiIThpK6mi2qLCaGaYb8Od1_0
+
+
+###
+// DELETE - Deleta um usuário pelo ID
+DELETE {{baseURL}}/:id
+// Apague o ':id' e coloque o ID do usuário que deseja deletar, exemplo: 666ee66e505e32d7810eb76b 
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7ImlkIjoiNjY2ZWU2NmU1MDVlMzJkNzgxMGViNzZiIn0sImlhdCI6MTcxODU0ODM1MiwiZXhwIjoxNzE5NDEyMzUyfQ.DVPqAb_mjUB1M7o9d4WiIThpK6mi2qLCaGaYb8Od1_0
