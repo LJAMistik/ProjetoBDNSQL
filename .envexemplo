@@ -1,10 +1,6 @@
-#PORT = 4000
-#MONGODB_URI = mongodb://127.0.0.1:27017/
-#MONGODB_DB = ProjetoMongodb
-#EXPIRES_IN = 240h
-#SECRET_KEY = suaChaveSecreta
-#SENHA_USUARIO = SenhaUsuario
-
-PORT = 8080 
-DATABASE_URL = mongodb://127.0.0.1:27017/calmamentebd
-JWT_SECRET = fc326804750e708b5ac1a8f49295ad32487049862e735ae315242cb59807de8e
+PORT = 4000
+MONGODB_URI = mongodb://127.0.0.1:27017/
+MONGODB_DB = ProjetoMongodb
+EXPIRES_IN = 240h
+SECRET_KEY = suaChaveSecreta
+SENHA_USUARIO = SenhaUsuario
