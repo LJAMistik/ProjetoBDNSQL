@@ -42,18 +42,21 @@
             
             <label for="email" class="label-formulario">Email:</label><br>
             <input type="email" class="controle-formulario" id="email" name="email" value="contato@clinicadeteste.com" required><br><br>
+            
+            <label for="data_cadastro" class="label-formulario">Data de Cadastro:</label><br>
+            <input type="date" class="controle-formulario" id="data_cadastro" name="data_cadastro" value="2024-05-09" required><br><br>
 
             <label for="telefone" class="label-formulario">Telefone:</label><br>
             <input type="tel" class="controle-formulario" id="telefone" name="telefone" value="(15) 99999-9999" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" title="Por favor, insira um número de contato válido (formato: (XX) XXXXX-XXXX)" required maxlength="15"><br><br>
             
             <label for="classificacao" class="label-formulario">Classificação:</label><br>
-            <input type="number" class="controle-formulario" id="classificacao" name="classificacao" value="4.8" min="0" max="5" step="0.1" required><br><br>
+            <input type="number" class="controle-formulario" id="classificacao" name="classificacao" value="4.8" min="0" max="10" step="0.1" required><br><br>
+
+            <label for="especialidades" class="label-formulario">Especialidades:</label><br>
+            <input type="text" class="controle-formulario" id="especialidades" name="especialidades" value="1, 2, 3, 4"  placeholder="Por exemplo: (1) Psiquiatria, (2) Psicoterapia, (3) Psicologia Clínica, (4) Medicina da Família" required><br> <br>
+            <small>Insira os números das especialidades separados por vírgula (ex: 1,2,4)</small><br><br>
 
             <legend class="rotulo">Endereço:</legend>
-
-            <label for="cep" class="label-formulario">CEP:</label><br>
-            <input type="text" class="controle-formulario" id="cep" name="cep" value="18111-000" pattern="\d{5}-\d{3}" title="Por favor, insira um CEP válido (formato: XXXXX-XXX)" required required maxlength="9" onchange="handleZipCode()"><br><br><br><br>
-            
             <label for="logradouro" class="label-formulario">Logradouro:</label><br>
             <input type="text" class="controle-formulario" id="logradouro" name="logradouro" value="Rua de Teste"><br><br>
             
@@ -69,7 +72,7 @@
             <label for="cidade" class="label-formulario">Cidade:</label><br>
             <input type="text" class="controle-formulario" id="cidade" name="cidade" value="Votorantim"><br><br>
             
-            <label for="unidade-da-federacao" class="label-formulario">Unidade da Federação</label>
+            <label for="unidade-federacao" class="label-formulario">Unidade da Federação</label>
             <select required class="controle-formulario" id="unidade-federacao">
               <option value="">Selecione...</option>
               <option value="AC">Acre (AC)</option>
@@ -101,7 +104,16 @@
               <option value="TO">Tocantins (TO)</option>
             </select><br><br>
             
-            </fieldset> 
+            <label for="cep" class="label-formulario">CEP:</label><br>
+            <input type="text" class="controle-formulario" id="cep" name="cep" value="18111-000" pattern="\d{5}-\d{3}" title="Por favor, insira um CEP válido (formato: XXXXX-XXX)" required required maxlength="9"><br><br><br><br>
+            
+            <legend class="rotulo">Coordenadas</legend>         
+            <label for="latitude" class="label-formulario">Latitude:</label><br>
+            <input type="number" class="controle-formulario" id="latitude" name="latitude" value="-23.5405" min="-90" max="90" step="any" required><br><br>
+
+            <label for="longitude" class="label-formulario">Longitude:</label><br>
+            <input type="number" class="controle-formulario" id="longitude" name="longitude" value="-47.444" min="-180" max="180" step="any" required><br><br>
+          </fieldset> 
           <div class="botao-enviar">
             <button type="submit" class="botao" id="salvar">Salvar</button>
           </div>
@@ -122,7 +134,10 @@
               <th>Data de Cadastro</th>
               <th>Telefone</th>
               <th>Classificação</th>
+              <th>Especialidades</th>
               <th>Endereço</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
               <th></th>
             </tr>
           </thead>
@@ -158,6 +173,5 @@
   <script src="js/clinicas.js"></script>
   <script src="js/script.js"></script>
   <script src="js/validaToken.js"></script>
-  <script src="js/viacep.js"></script>
 </body>
 </html>
