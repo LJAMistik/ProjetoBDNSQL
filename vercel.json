@@ -3,22 +3,12 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/app.ts"
+            "destination": "/api"
         }
     ],
     "functions": {
-        "app.ts": {
-            "runtime": "vercel-nodejs",
-            "includeFiles": [
-                "enums/**",
-                "http/**",
-                "middleware/**",
-                "models/**",
-                "public/**",
-                "routes/**",
-                "schemas/**",
-                "validators/**"
-            ]
+        "api/index.js": {
+            "includeFiles": "api/swagger/swagger_output.json"
         }
     }
 }
