@@ -82,6 +82,20 @@ img {
     outline: none;
 }
 
+.botao:disabled {
+    display: inline-block;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    color: #2f1349;
+    font-size: 24px;
+    text-decoration: none;
+    transition: all 0.5s ease;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
 .alternar-senha {
     width: 24px;
     height: auto;
@@ -432,24 +446,29 @@ tbody tr:nth-child(even) {
     margin-bottom: 25px;
 }
 
-#senha, #confirma-senha {
-    width: 75%;
-    padding-right: 40px;
+/* Fim dos estilos da pagina de usuarios */
+
+.password-field input {
+    padding-right: 48px;
+    width: 100%;
     box-sizing: border-box;
 }
 
-#alternar-senha2 {
-    top: 987px;
-    left: 920px;
+.password-field {
+    width: 75%;
+    position: relative;
+    display: inline-block;
 }
 
-#alternar-senha3 {
-    top: 1100px;
-    left: 920px;
+.password-field img {
+    top: 24px;
+    right: 16px;
 }
-/* Fim dos estilos da pagina de usuarios */
 
 
+#formulario-login .password-field {
+    width: 100%;
+}
 
 
 
