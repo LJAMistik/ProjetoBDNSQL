@@ -21,6 +21,7 @@ Renomeie o arquivo .env-example para .env e forneça a sua string de conexão co
 Instale a pasta node_modules usando o comando: npm i
 
 Execute o servidor localmente, no terminal bash do VSCode, usando: npm run dev
+Execute o jest para testes, no terminal bash do VSCode, usando: npm test
 
 ## 🛠️ Definições
 Pacotes Utilizados
