@@ -3,7 +3,7 @@ use('ProjetoMongodb')
 const clinicas = {
   "nome": "Clinica de Teste 1",
   "email": "contato@clinicadeteste1.com",
-  "data_cadastro": "09/04/2024",
+  "data_cadastro": "2022-07-22",
   "telefone": "(15) 99111-1111",
   "classificacao": "3.5",
   "especialidades": ["1", "2", "3", "4"],
