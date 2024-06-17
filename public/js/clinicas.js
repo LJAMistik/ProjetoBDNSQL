@@ -60,11 +60,7 @@ async function salvaClinicas(clinicas) {
       alert('Token não encontrado. Faça login novamente.');
       return;
     }
-<<<<<<< HEAD
- 
-=======
-  
->>>>>>> f6d0d1bfe7f017aaa787717c5477b90c0b45eb8e
+
     try {
 
       const response = await fetch(`${urlBase}/clinicas`, {
@@ -243,6 +239,7 @@ async function atualizaClinica(id, dadosAtualizados) {
 
 async function editaClinicaExistente(id) {
   const token = localStorage.getItem('token');
+  
   if (!token) {
     console.error('Token não encontrado');
     alert('Token não encontrado. Faça login novamente.');
@@ -250,17 +247,10 @@ async function editaClinicaExistente(id) {
   }
 
   try {
-<<<<<<< HEAD
     // Buscar os dados da clínica existente pelo ID
     const response = await fetch(`${urlBase}/clinicas/id/${id}`, {
       headers: {
         'access-token': token
-=======
-    // Buscar os dados da clinica existente pelo ID
-    const response = await fetch(`${urlBase}/clinicas/id/${id}`, {
-      headers: {
-      'access-token': token
->>>>>>> f6d0d1bfe7f017aaa787717c5477b90c0b45eb8e
       }
     });
 
@@ -275,6 +265,7 @@ async function editaClinicaExistente(id) {
     // Preencher os campos do formulário com os valores da clínica existente
     document.getElementById('nome').value = dadosClinica.nome;
     document.getElementById('email').value = dadosClinica.email;
+    
     // Formatação da data de cadastro
     const dataCadastro = new Date(dadosClinica.data_cadastro);
     const dataFormatada = dataCadastro.toISOString().split('T')[0]; // Converte para formato 'yyyy-MM-dd'
@@ -296,22 +287,26 @@ async function editaClinicaExistente(id) {
       event.preventDefault();
       
       const dadosAtualizados = {
-        "nome": document.getElementById('nome').value,
-        "email": document.getElementById('email').value,
-        "data_cadastro": document.getElementById('data_cadastro').value,
-        "telefone": document.getElementById('telefone').value,
-        "classificacao": document.getElementById('classificacao').value,
-        "especialidades": document.getElementById('especialidades').value.split(','),
-        "endereco": {
-          "logradouro": document.getElementById('logradouro').value,
-          "complemento": document.getElementById('complemento').value,
-          "bairro": document.getElementById('bairro').value,
-          "cidade": document.getElementById('cidade').value,
-          "uf": document.getElementById('unidade-federacao').value,
-          "cep": document.getElementById('cep').value,
-          "coordinates": [document.getElementById('latitude').value, document.getElementById('longitude').value]
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        data_cadastro: document.getElementById('data_cadastro').value,
+        telefone: document.getElementById('telefone').value,
+        classificacao: document.getElementById('classificacao').value,
+        especialidades: document.getElementById('especialidades').value.split(','),
+        endereco: {
+          logradouro: document.getElementById('logradouro').value,
+          complemento: document.getElementById('complemento').value,
+          bairro: document.getElementById('bairro').value,
+          cidade: document.getElementById('cidade').value,
+          uf: document.getElementById('unidade-federacao').value,
+          cep: document.getElementById('cep').value,
+          coordinates: [
+            document.getElementById('latitude').value,
+            document.getElementById('longitude').value
+          ]
         }
       };
+      
       try {
         // Chamar a função para atualizar a clínica com os dados preenchidos
         await atualizaClinica(id, dadosAtualizados, token);
@@ -328,6 +323,7 @@ async function editaClinicaExistente(id) {
     alert('Erro ao tentar editar a clínica. Por favor, tente novamente.');
   }
 }
+
 
 
 // ################################################# FUNÇÃO PARA APAGAR ################################################
