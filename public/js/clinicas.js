@@ -60,7 +60,11 @@ async function salvaClinicas(clinicas) {
       alert('Token não encontrado. Faça login novamente.');
       return;
     }
+<<<<<<< HEAD
+ 
+=======
   
+>>>>>>> f6d0d1bfe7f017aaa787717c5477b90c0b45eb8e
     try {
 
       const response = await fetch(`${urlBase}/clinicas`, {
@@ -246,25 +250,35 @@ async function editaClinicaExistente(id) {
   }
 
   try {
+<<<<<<< HEAD
+    // Buscar os dados da clínica existente pelo ID
+    const response = await fetch(`${urlBase}/clinicas/id/${id}`, {
+      headers: {
+        'access-token': token
+=======
     // Buscar os dados da clinica existente pelo ID
     const response = await fetch(`${urlBase}/clinicas/id/${id}`, {
       headers: {
       'access-token': token
+>>>>>>> f6d0d1bfe7f017aaa787717c5477b90c0b45eb8e
       }
     });
 
     if (!response.ok) {
-      alert('Erro ao obter os dados da clinica. Por favor, tente novamente.');
+      alert('Erro ao obter os dados da clínica. Por favor, tente novamente.');
       return;
     }
     
     const clinicaExistente = await response.json();
     const dadosClinica = clinicaExistente[0];
     
-    // Preencher os campos do formulário com os valores da clinica existente
+    // Preencher os campos do formulário com os valores da clínica existente
     document.getElementById('nome').value = dadosClinica.nome;
     document.getElementById('email').value = dadosClinica.email;
-    document.getElementById('data_cadastro').value = dadosClinica.data_cadastro;
+    // Formatação da data de cadastro
+    const dataCadastro = new Date(dadosClinica.data_cadastro);
+    const dataFormatada = dataCadastro.toISOString().split('T')[0]; // Converte para formato 'yyyy-MM-dd'
+    document.getElementById('data_cadastro').value = dataFormatada;
     document.getElementById('telefone').value = dadosClinica.telefone;
     document.getElementById('classificacao').value = dadosClinica.classificacao;
     document.getElementById('especialidades').value = dadosClinica.especialidades.join(',');
@@ -277,9 +291,10 @@ async function editaClinicaExistente(id) {
     document.getElementById('latitude').value = dadosClinica.endereco.coordinates[0];
     document.getElementById('longitude').value = dadosClinica.endereco.coordinates[1];
     
-    // Adicionar um evento de clique ao botão de enviar do formulário para chamar a função de atualização com os dados preenchidos
-    document.getElementById('formulario-clinica').addEventListener('submit', function (event) {
+    // Adicionar um evento de submit ao formulário para chamar a função de atualização com os dados preenchidos
+    document.getElementById('formulario-clinica').addEventListener('submit', async function (event) {
       event.preventDefault();
+      
       const dadosAtualizados = {
         "nome": document.getElementById('nome').value,
         "email": document.getElementById('email').value,
@@ -297,14 +312,20 @@ async function editaClinicaExistente(id) {
           "coordinates": [document.getElementById('latitude').value, document.getElementById('longitude').value]
         }
       };
-      
-      // Chamar a função para atualizar a clinica com os dados preenchidos
-      atualizaClinica(id, dadosAtualizados);
+      try {
+        // Chamar a função para atualizar a clínica com os dados preenchidos
+        await atualizaClinica(id, dadosAtualizados, token);
+        alert('Clínica atualizada com sucesso!');
+        // Implemente a lógica para redirecionar ou atualizar a página após a atualização
+      } catch (error) {
+        console.error('Erro ao tentar atualizar a clínica:', error);
+        alert('Erro ao tentar atualizar a clínica. Por favor, tente novamente.');
+      }
     });
     
   } catch (error) {
-    console.error('Erro ao tentar editar a clinica:', error);
-    alert('Erro ao tentar editar a clinica. Por favor, tente novamente.');
+    console.error('Erro ao tentar editar a clínica:', error);
+    alert('Erro ao tentar editar a clínica. Por favor, tente novamente.');
   }
 }
 
